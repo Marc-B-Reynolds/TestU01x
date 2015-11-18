@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="generators">
+      <UniqueIdentifier>{8cb5af64-9005-4e38-a31b-0a78233d8382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{82512b15-5818-4677-b68b-53c8e4b48aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="probdist">
+      <UniqueIdentifier>{35fd8e8c-2bb0-47b5-842a-578f7edf4733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stats">
+      <UniqueIdentifier>{eb25c3d8-6039-4898-93aa-33ac9542bada}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\generators\uautomata.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ubrent.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ucarry.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ucrypto.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ucubic.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\udeng.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ufile.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ugfsr.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ugranger.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uinv.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uknuth.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ulcg.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ulec.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\umarsa.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\umrg.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\unif01.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\unumrec.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uquad.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\usoft.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\utaus.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\utezuka.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\utouzin.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uvaria.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uweyl.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uwu.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\uxorshift.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\fbar.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\fdist.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\finv.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\fmass.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\gofs.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\gofw.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\statcoll.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\probdist\wdist.c">
+      <Filter>probdist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fcho.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fcong.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ffam.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ffsr.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fknuth.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fmarsa.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fmultin.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fnpair.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fres.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fspectral.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fstring.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\ftab.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fvaria.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generators\fwalk.c">
+      <Filter>generators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\scatter.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\scomp.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sentrop.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sknuth.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\smarsa.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\smultin.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\snpair.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sres.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sspacings.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sspectral.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\sstring.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\svaria.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\swalk.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\swrite.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stats\bbattery.c">
+      <Filter>stats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\addstr.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\bitset.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\chrono.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\mystr.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\num.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\num2.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\tables.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\util.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\vectorsF2.c">
+      <Filter>util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\..\src\generators\uxorshift.h">
+      <Filter>generators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\util\num.h">
+      <Filter>util</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,42 @@
+# Meh...temp hack
+
+# emacs temp files
+*~
+
+*.o
+*.ko
+*.obj
+*.elf
+
+*.gch
+*.pch
+
+*.lib
+*.a
+*.la
+*.lo
+
+*.dll
+*.so
+*.so.*
+*.dylib
+
+*.exe
+*.out
+
+# Visual Studio Junk
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+.vs/

@@ -1,2 +1,3 @@
-# TestU01x
-Modified version of the classic PRNG test suite
+
+
+http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ADAPTIVE/
