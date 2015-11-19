@@ -84,7 +84,7 @@ void swrite_Final (unif01_Gen *gen, chrono_Chrono *Timer)
 void swrite_AddStrChi (char S[], int len, long d)
 {
    char str[31];
-   int j;
+   size_t j;
    strncpy (S, "Number of degrees of freedom          : ", len);
    j = strlen (S);
    util_Assert (len > j, "swrite_AddStrChi:   len <= j");

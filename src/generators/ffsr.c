@@ -47,10 +47,8 @@ static int ReadOneLFSR1 (char *Line, ffam_Fam * fam, int i)
    if (k <= 32)
       fam->Gen[i] = utaus_CreateTaus (k, q, s,
              SEED & (unsigned long) (num_TwoExp[k] - 1.0));
-#ifdef USE_LONGLONG
    else
       fam->Gen[i] = utaus_CreateLongTaus (k, q, s, (ulonglong) SEED);
-#endif
    return 0;
 }
 

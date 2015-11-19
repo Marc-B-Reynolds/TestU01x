@@ -235,6 +235,9 @@
     <ClCompile Include="..\..\src\util\vectorsF2.c">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\stats\adaptive_crush.c">
+      <Filter>stats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h" />

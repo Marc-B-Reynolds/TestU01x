@@ -1,31 +1,6 @@
 /*************************************************************************\
- *
- * Package:        MyLib
- * File:           tables.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
+* Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
+* SEE: LICENSE
 \*************************************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -243,30 +218,34 @@ void tables_QuickSortLL (longlong T[], int l, int r)
 
 void tables_QuickSortULL (ulonglong T[], int l, int r)
 {
-   int j;
-   int i;
-   ulonglong w;
-   ulonglong x;
-   i = l;
-   j = r;
-   x = T[(l + r) / 2];
-   do {
-      while (T[i] < x)
-         ++i;
-      while (x < T[j])
-         --j;
-      if (i <= j) {
-         w = T[i];
-         T[i] = T[j];
-         T[j] = w;
-         ++i;
-         --j;
-      }
-   } while (i <= j);
-   if (l < j)
-      tables_QuickSortULL (T, l, j);
-   if (i < r)
-      tables_QuickSortULL (T, i, r);
+  int j;
+  int i;
+  ulonglong w;
+  ulonglong x;
+  i = l;
+  j = r;
+  x = T[(l + r) / 2];
+  
+  do {
+    while (T[i] < x)
+      ++i;
+    while (x < T[j])
+      --j;
+    if (i <= j) {
+      w = T[i];
+      T[i] = T[j];
+      T[j] = w;
+      ++i;
+      --j;
+    }
+  } while (i <= j);
+  
+  
+  if (l < j)
+    tables_QuickSortULL (T, l, j);
+  
+  if (i < r)
+    tables_QuickSortULL (T, i, r);
 }
 
 #endif

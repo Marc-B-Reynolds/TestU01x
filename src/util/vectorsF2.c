@@ -1,3 +1,4 @@
+
 #include "vectorsF2.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +18,6 @@ unsigned long MMC[WL] =
 
 lebool InverseMatrix (Matrix * InvM, Matrix * M)
 {
-
    Matrix Temp;
    int j, rang;
    if (M->nblignes != M->l) {
@@ -1030,11 +1030,7 @@ void MatrixTwoPow (Matrix * A, Matrix * B, unsigned int e)
 /* Fait l'exponentiation : A = B^e               			  */
 /* ********************************************************************** */
 
-#ifdef USE_LONGLONG
 void MatrixPow (Matrix * A, Matrix * B, longlong e)
-#else
-void MatrixPow (Matrix * A, Matrix * B, long e)
-#endif
 {
    int i;
    Matrix C;

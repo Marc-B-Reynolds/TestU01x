@@ -39,8 +39,6 @@ typedef struct {
    int i;
 } Xorgen32_state;
 
-
-#ifdef USE_LONGLONG
 typedef struct {
    unsigned int r, s, a, b, c, d;
    unsigned int Mask;
@@ -55,7 +53,6 @@ typedef struct {
    unsigned int r2;
    int i;
 } Xorgen64_state;
-#endif
 
 
 static int co1 = 0, co2 = 0, co3 = 0, co4 = 0, co5 = 0;      /* Counters */

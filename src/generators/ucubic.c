@@ -35,8 +35,6 @@ typedef struct {
 
 
 /*---------------*/
-#ifdef USE_LONGLONG
-
 typedef struct {
    ulonglong m, a, b, c, d;
    double Norm;
@@ -46,19 +44,6 @@ typedef struct {
    ulonglong X;
 } CubicL_state;
 
-/*---------------*/
-#else
-
-typedef struct {
-   long m, a, b, c, d;
-   double Norm;
-} CubicL_param;
-
-typedef struct {
-   long X;
-} CubicL_state;
-
-#endif
 /*---------------*/
 
 
@@ -173,8 +158,6 @@ static double Cubic_U01 (void *vpar, void *vsta)
 
 
 /*---------------*/
-#ifdef USE_LONGLONG
-
 static double CubicL_U01 (void *vpar, void *vsta)
 /*
  * Implementation of Cubic used in the general case.
@@ -189,24 +172,7 @@ static double CubicL_U01 (void *vpar, void *vsta)
 }
 
 /*---------------*/
-#else
 
-static double CubicL_U01 (void *vpar, void *vsta)
-/*
- * Implementation of Cubic used in the general case. Very slow.
- */
-{
-   CubicL_param *param = vpar;
-   CubicL_state *state = vsta;
-   long k;
-
-   k = num_MultModL (param->a, state->X, param->b, param->m);
-   k = num_MultModL (k, state->X, param->c, param->m);
-   state->X = num_MultModL (k, state->X, param->d, param->m);
-   return state->X * param->Norm;
-}
-
-#endif
 /*---------------*/
 
 

@@ -1499,11 +1499,7 @@ static void WriteDataPowDiv (
       printf ("       Number of cells = k = ");
    }
 
-#ifdef USE_LONGLONG
    printf ("%18" PRIuLEAST64 "\n", k);
-#else
-   printf ("%18.0f\n", k);
-#endif
 
    util_Assert (k <= smultin_env.Maxk, "Multinomial:  k is too large");
    printf ("       Expected number per cell =  ");
@@ -1588,11 +1584,7 @@ static void WriteDataMNBits (
 
    /* printf (" GenerCell = smultin_GenerCellSerialBits\n"); */
 
-#ifdef USE_LONGLONG
    printf ("       Number of cells = 2^L = %18" PRIuLEAST64 "\n", k);
-#else
-   printf ("       Number of cells = 2^L = %18.0f\n", k);
-#endif
    util_Assert (k <= smultin_env.Maxk, "Multinom:  k is too large");
 
    printf ("       Expected number per cell =  ");
@@ -1766,13 +1758,9 @@ static void WriteResultsPowDiv (
       printf ("Delta = %8.4f\n\n", par->ValDelta[s]);
       if (N == 1) {
          if (!Sparse) {
-#ifdef USE_LONGLONG
+
             printf ("Number of degrees of freedom          : %4" PRIuLEAST64
                "\n", DegreLib);
-#else
-            printf ("Number of degrees of freedom          : %4.0f\n",
-               DegreLib);
-#endif
 
          }
          printf ("Value of the statistic                :");
@@ -1819,15 +1807,10 @@ static void WriteResultsPowDiv (
       }
       printf ("-----------------------------\n");
       printf ("Total number of cells containing j balls\n\n");
+
       for (j = 0; j <= smultin_MAXB / 2; j++) {
          printf ("  j = %2ld", j);
-
-#ifdef USE_LONGLONG
-         printf ("                              : %16" PRIuLEAST64 "\n",
-            res->NbCells[j]);
-#else
-         printf ("                              : %16.0f\n", res->NbCells[j]);
-#endif
+         printf ("                              : %16" PRIuLEAST64 "\n",  res->NbCells[j]);
       }
 
       if (par->bmax >= 0 && res->NbCells[0] <= EMPTYLIM &&
@@ -1837,11 +1820,7 @@ static void WriteResultsPowDiv (
             "Expected number                       : ");
          num_WriteD (res->EsEmpty, 19, 2, 2);
          printf ("\nObserved number                       :");
-#ifdef USE_LONGLONG
          printf (" %16" PRIuLEAST64 "\n", res->NbCells[0]);
-#else
-         printf (" %16.0f\n", res->NbCells[0]);
-#endif
          gofw_Writep1 (res->pEmpty);
       }
       if (par->bmax >= 1) {
@@ -1868,7 +1847,6 @@ static void UpdateCountHash (
    smultin_Res *res, 
    smultin_CellType Ind,
    long Hache,
-   double UnSurHache,
    long *CoMax,
    lebool DimFlag          /* TRUE for t-1 dimension, FALSE for t dim. */
    )
@@ -1880,7 +1858,7 @@ static void UpdateCountHash (
    long *Count;
    smultin_CellType *Cell;
    smultin_CellType *Nb;
-   long Decal, Pos, Tem;
+   long Decal, Pos;//, Tem;
 
    if (DimFlag == FALSE) {
       Count = res->Count;         /* Counters in t dimensions */
@@ -1892,54 +1870,48 @@ static void UpdateCountHash (
       Nb = res->Nb1;
    }
 
-#ifdef USE_LONGLONG
-   Pos = Ind % Hache;
-#else
-   Tem = Ind * UnSurHache;
-   Pos = Ind - (double) Hache * Tem;
-#endif
-
+   Pos   = Ind % Hache;
    Decal = HACHE2 + Pos % HACHE2;
 
    /* Insert in hashing table; if sign bit is 1, cell is empty. */
    for (;;) {
-#ifdef USE_LONGLONG
-      if (Cell[Pos] & MASK64) {
-#else
-      if (Cell[Pos] < 0.0) {
-#endif
-         Cell[Pos] = Ind;
-         break;
-      }
-      if (Cell[Pos] == Ind)
-         break;
-      Pos = (Pos + Decal) % Hache;
+
+     if (Cell[Pos] & MASK64) {
+       Cell[Pos] = Ind;
+       break;
+     }
+
+     if (Cell[Pos] == Ind)
+       break;
+
+     Pos = (Pos + Decal) % Hache;
    }
 
    Nb[Count[Pos]] -= 1;
+   
    ++(Count[Pos]);
+
    if (Count[Pos] > *CoMax)
       ++(*CoMax);
+
    if (DimFlag == FALSE) {
-      if (*CoMax > res->NbSize) {
-         int i;
-         res->NbSize *= 2;
-         res->Nb = util_Realloc (res->Nb,
-            (res->NbSize + 1) * sizeof (smultin_CellType));
-         Nb = res->Nb;
-         for (i = res->NbSize / 2 + 1; i <= res->NbSize; i++)
-            Nb[i] = 0;
-      }
+     if (*CoMax > res->NbSize) {
+       int i;
+       res->NbSize *= 2;
+       res->Nb = util_Realloc(res->Nb, (res->NbSize + 1) * sizeof (smultin_CellType));
+       Nb = res->Nb;
+       for (i = res->NbSize / 2 + 1; i <= res->NbSize; i++)
+	 Nb[i] = 0;
+     }
    } else {
-      if (*CoMax > res->Nb1Size) {
-         int i;
-         res->Nb1Size *= 2;
-         res->Nb1 = util_Realloc (res->Nb1,
-            (res->Nb1Size + 1) * sizeof (smultin_CellType));
-         Nb = res->Nb1;
-         for (i = res->Nb1Size / 2 + 1; i <= res->Nb1Size; i++)
-            Nb[i] = 0;
-      }
+     if (*CoMax > res->Nb1Size) {
+       int i;
+       res->Nb1Size *= 2;
+       res->Nb1 = util_Realloc(res->Nb1, (res->Nb1Size + 1) * sizeof (smultin_CellType));
+       Nb = res->Nb1;
+       for (i = res->Nb1Size / 2 + 1; i <= res->Nb1Size; i++)
+	 Nb[i] = 0;
+     }
    }
    Nb[Count[Pos]] += 1;
 }
@@ -1949,7 +1921,7 @@ static void UpdateCountHash (
 
 static void GenerAllPointsHash (unif01_Gen * gen, smultin_Param * par,
    smultin_Res * res, long n, int r, long d, int t, long *pCoMax,
-   long Hache, double UnSurHache)
+   long Hache)
 /*
  * Generate all n points in hashing case
  */
@@ -1958,15 +1930,13 @@ static void GenerAllPointsHash (unif01_Gen * gen, smultin_Param * par,
    long i;
 
    for (i = 0; i <= Hache; i++)
-#ifdef USE_LONGLONG
       res->Cell[i] = MASK64;      /* Empty cells */
-#else
-      res->Cell[i] = -1.0;        /* Empty cells */
-#endif
+
    *pCoMax = 0;
+
    for (i = 1; i <= n; i++) {
       Indice = par->GenerCell (gen, r, t, d);
-      UpdateCountHash (res, Indice, Hache, UnSurHache, pCoMax, FALSE);
+      UpdateCountHash (res, Indice, Hache, pCoMax, FALSE);
    }
 }
 
@@ -1991,8 +1961,7 @@ static void GenerAllPoints2 (unif01_Gen * gen, smultin_Param * par,
 /*=======================================================================*/
 
 static void GenerAllPointsHashBits (unif01_Gen *gen, smultin_Res *res,
-   long n, int r, long L, int s, long *pCoMax, long Hache,
-   double UnSurHache)
+   long n, int r, long L, int s, long *pCoMax, long Hache)
 /*
  * Generate all n points of L bits each in hashing case
  */
@@ -2006,18 +1975,15 @@ static void GenerAllPointsHashBits (unif01_Gen *gen, smultin_Res *res,
    const unsigned long MASK = num_TwoExp[L] - 1.0;
 
    for (i = 0; i <= Hache; i++)
-#ifdef USE_LONGLONG
       res->Cell[i] = MASK64;      /* Empty cells */
-#else
-      res->Cell[i] = -1.0;        /* Empty cells */
-#endif
+
    *pCoMax = 0;
 
    for (i = 1; i <= n / t; i++) {
       Z = unif01_StripB (gen, r, s);
       for (j = 1; j <= t; j++) {
          Indice = Z & MASK;
-         UpdateCountHash (res, Indice, Hache, UnSurHache, pCoMax, FALSE);
+         UpdateCountHash (res, Indice, Hache, pCoMax, FALSE);
          Z >>= L;
       }
    }
@@ -2029,7 +1995,7 @@ static void GenerAllPointsHashBits (unif01_Gen *gen, smultin_Res *res,
          Z >>= L;
       for (j = 1; j <= Last; j++) {
          Indice = Z & MASK;
-         UpdateCountHash (res, Indice, Hache, UnSurHache, pCoMax, FALSE);
+         UpdateCountHash (res, Indice, Hache, pCoMax, FALSE);
          Z >>= L;
       }
    }
@@ -2092,7 +2058,6 @@ static void Multinom (unif01_Gen * gen, smultin_Param * par,
    double NbExp;                  /* Expected number per cell */
    double EColl;                  /* Approx. expected number of collisions */
    long Hache;                    /* Hashing module */
-   double UnSurHache;
    double HacheLR;                /* Dimension of hashing table */
    long i;
    long CoMax;                    /* Maximum number of balls in any cell */
@@ -2140,7 +2105,6 @@ static void Multinom (unif01_Gen * gen, smultin_Param * par,
    else
       Hache = k;
    HacheLR = Hache;
-   UnSurHache = 1.0 / HacheLR;
    res->CountSize = Hache;
    res->Count = util_Calloc ((size_t) Hache + 2, sizeof (long));
    res->Cell = util_Calloc ((size_t) Hache + 2, sizeof (smultin_CellType));
@@ -2158,27 +2122,19 @@ static void Multinom (unif01_Gen * gen, smultin_Param * par,
       if (BitFlag) {
          /* Here, d stands for L, and t for s */
          if (res->Hashing)
-            GenerAllPointsHashBits (gen, res, n, r, d, t, &CoMax, Hache,
-               UnSurHache);
+            GenerAllPointsHashBits (gen, res, n, r, d, t, &CoMax, Hache);
          else
             GenerAllPoints2Bits (gen, res, n, r, d, t);
       } else {
          if (res->Hashing)
-            GenerAllPointsHash (gen, par, res, n, r, d, t, &CoMax, Hache,
-               UnSurHache);
+            GenerAllPointsHash (gen, par, res, n, r, d, t, &CoMax, Hache);
          else
             GenerAllPoints2 (gen, par, res, n, r, d, t);
       }
 
       if (swrite_Counters) {
          if (res->Hashing)
-#ifdef USE_LONGLONG
-            tables_WriteTabULL (res->Nb, 0, CoMax, 5, 12,
-               "Observed numbers in res->Nb");
-#else
-            tables_WriteTabD (res->Nb, 0, CoMax, 5, 12, 0, 0,
-               "Observed numbers in res->Nb");
-#endif
+            tables_WriteTabULL (res->Nb, 0, CoMax, 5, 12, "Observed numbers in res->Nb");
          else if (!Sparse)
             tables_WriteTabL (res->Count, 0, res->CountSize - 1, 5, 10,
                               "Observed numbers in res->Count");
@@ -2268,7 +2224,7 @@ void smultin_Multinomial (unif01_Gen * gen, smultin_Param * par,
 
    } else if (par->GenerCell == smultin_GenerCellPermut) {
       util_Assert (t > 1, "Permutation... smultin_Multinomial:   t < 2");
-#ifdef USE_LONGLONG
+
       /* longlong has more bits of precision than double */
       util_Assert (t <= 20, "smultin_GenerCellPermut:  t > 20");
       if (t == 20) {
@@ -2277,11 +2233,6 @@ void smultin_Multinomial (unif01_Gen * gen, smultin_Param * par,
          k = num2_Factorial (18) * 19;
       } else
          k = num2_Factorial (t);
-#else
-      util_Assert (t <= 18, "smultin_GenerCellPermut:  t > 18");
-      k = num2_Factorial (t);
-#endif
-
    } else if (par->GenerCell == smultin_GenerCellMax) {
       util_Assert (t > 1, "GenerCellMax... smultin_Multinomial:   t < 2");
       k = t;
@@ -2292,10 +2243,6 @@ void smultin_Multinomial (unif01_Gen * gen, smultin_Param * par,
    util_Assert (k <= smultin_env.Maxk,
       "smultin_Multinomial:   k > smultin_env.Maxk");
    util_Assert (n > 4, "smultin_Multinomial:   n <= 4");
-#ifndef USE_LONGLONG
-   util_Assert ((double) n / k > 1.0 / num_TwoExp[31],
-      "smultin_Multinomial:   NbExp <= 1/2^31");
-#endif
    Multinom (gen, par, res, N, n, r, d, t, Sparse, k, TestName, Timer, FALSE);
    chrono_Delete (Timer);
 }
@@ -2559,13 +2506,7 @@ static void WriteResCollOver (
       printf ("POISSON approximation                 :\n"
               "Expected number of empty cells = N*Mu : ");
       num_WriteD (N * Esperance, 18, 2, 2);
-#ifdef USE_LONGLONG
-      printf ("\nObserved number of empty cells        : %15" PRIuLEAST64 "\n",
-              res->NbCells[0]);
-#else
-      printf ("\nObserved number of empty cells        : %15.0f\n",
-              res->NbCells[0]);
-#endif
+      printf ("\nObserved number of empty cells        : %15" PRIuLEAST64 "\n", res->NbCells[0]);
       gofw_Writep1 (res->pColl);
       break;
 
@@ -2582,12 +2523,7 @@ static void WriteResCollOver (
       "Total number of cells containing j balls\n\n");
    for (j = 0; j <= smultin_MAXB / 2; j++) {
       printf ("  j = %2d", j);
-#ifdef USE_LONGLONG
-      printf ("                              : %16" PRIuLEAST64 "\n",
-              res->NbCells[j]);
-#else
-      printf ("                              : %16.0f\n", res->NbCells[j]);
-#endif
+      printf ("                              : %16" PRIuLEAST64 "\n", res->NbCells[j]);
    }
    printf ("\n");
 }
@@ -2678,12 +2614,10 @@ static void OverHashGenere (
  * case, and fill the counters. We use hashing.
  */
 {
-   long j, tem;
+	long j;//, tem;
    long d = dLR;
    smultin_CellType Indice;
    smultin_CellType element;
-   double UnSurHache1;
-   double UnSurHache11;
    double UnSurk1;
    smultin_CellType Premier[MAX_DIM];
    long *Count = res->Count;      /* Counters in t dimensions */
@@ -2695,24 +2629,14 @@ static void OverHashGenere (
 
    util_Assert (t < MAX_DIM, "OverHashGenere:   t > 64");
    UnSurk1 = 1.0 / k1;
-   UnSurHache1 = 1.0 / Hache1;
-   UnSurHache11 = 1.0 / Hache11;
 
    for (j = 0; j <= Hache1; j++) {
       Count[j] = 0;
-#ifdef USE_LONGLONG
       Cell[j] = MASK64;           /* Empty cells */
-#else
-      Cell[j] = -1.0;             /* Empty cells */
-#endif
    }
    for (j = 0; j <= Hache11; j++) {
       Count1[j] = 0;
-#ifdef USE_LONGLONG
       Cell1[j] = MASK64;          /* Empty cells */
-#else
-      Cell1[j] = -1.0;            /* Empty cells */
-#endif
    }
    for (j = 1; j <= res->NbSize; j++)
       Nb[j] = 0;
@@ -2742,28 +2666,18 @@ static void OverHashGenere (
    /* Generation of the first n - (t - 1) tuples */
    for (j = 1; j <= n - (t - 1); j++) {
       /* Operation % k1 */
-#ifdef USE_LONGLONG
       Indice %= k1;
-#else
-      tem = Indice * UnSurk1;
-      Indice -= k1 * tem;
-#endif
-      UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+      UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
       Indice = Indice * dLR + unif01_StripL (gen, r, d);
-      UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+      UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
    }
 
    /* Generate the last (t - 1) tuples. We use the elements of Premier[] */
    for (j = 1; j < t; j++) {
-#ifdef USE_LONGLONG
       Indice %= k1;
-#else
-      tem = Indice * UnSurk1;
-      Indice -= k1 * tem;
-#endif
-      UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+      UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
       Indice = Indice * dLR + Premier[j];
-      UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+      UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
    }
 }
 
@@ -2802,8 +2716,8 @@ static void OverDenseGenereBits (
       Count1[i] = 0;
 
    if (L + s <= 32) {
-      const unsigned long MASK = num_TwoExp[L] - 1.0;
-      const unsigned long MASK1 = num_TwoExp[L - 1] - 1.0;
+      const unsigned long MASK  = num_TwoExp[L]   - 1.0;
+      const unsigned long MASK1 = num_TwoExp[L-1] - 1.0;
       const int t = (L - 1) / s + 1;
       unsigned long Z, Z0;
       int b;
@@ -3028,28 +2942,16 @@ static void OverHashGenereBits (
    long i;
    unsigned long Premier[MAX_DIM];
    smultin_CellType Indice;
-   double UnSurHache1;
-   double UnSurHache11;
 
    util_Assert (L < MAX_DIM, "OverHashGenereBits:   L > 64");
-   UnSurHache1 = 1.0 / Hache1;
-   UnSurHache11 = 1.0 / Hache11;
 
    for (j = 0; j <= Hache1; j++) {
       res->Count[j] = 0;
-#ifdef USE_LONGLONG
       res->Cell[j] = MASK64;      /* Empty cells */
-#else
-      res->Cell[j] = -1.0;        /* Empty cells */
-#endif
    }
    for (j = 0; j <= Hache11; j++) {
       res->Count1[j] = 0;
-#ifdef USE_LONGLONG
       res->Cell1[j] = MASK64;     /* Empty cells */
-#else
-      res->Cell1[j] = -1.0;       /* Empty cells */
-#endif
    }
    for (j = 1; j <= res->NbSize; j++)
       res->Nb[j] = 0;
@@ -3081,9 +2983,9 @@ static void OverHashGenereBits (
          Z = Z0 = (Z0 << s) | unif01_StripB (gen, r, s);
          for (j = 0; j < s; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11,CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3099,9 +3001,9 @@ static void OverHashGenereBits (
       Z = Z0;
       for (j = 0; j < (int) b; j++) {
          Indice = Z & MASK1;
-         UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+         UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
          Indice = Z & MASK;
-         UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+         UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
          Z >>= 1;
       }
 
@@ -3110,9 +3012,9 @@ static void OverHashGenereBits (
          Z = Z0 = (Z0 << s) | Premier[i];
          for (j = 0; j < s; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3143,9 +3045,9 @@ static void OverHashGenereBits (
          Z = Z0 = (Z0 << s) | unif01_StripB (gen, r, s);
          for (j = 0; j < s; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11,CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3161,9 +3063,9 @@ static void OverHashGenereBits (
       Z = Z0;
       for (j = 0; j < (int) b; j++) {
          Indice = Z & MASK1;
-         UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+         UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
          Indice = Z & MASK;
-         UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+         UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
          Z >>= 1;
       }
 
@@ -3172,9 +3074,9 @@ static void OverHashGenereBits (
          Z = Z0 = (Z0 << s) | Premier[i];
          for (j = 0; j < s; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3211,20 +3113,18 @@ static void OverHashGenereBits (
             Z = Z0 = (Z0 << q1) | (Bloc >> (q2 + (t2 - k) * q1));
             for (j = 0; j < q1; j++) {
                Indice = Z & MASK1;
-               UpdateCountHash (res, Indice, Hache11, UnSurHache11,
-                  CoMax1, TRUE);
+               UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
                Indice = Z & MASK;
-               UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax,
-                  FALSE);
+               UpdateCountHash (res, Indice, Hache1, CoMax,   FALSE);
                Z >>= 1;
             }
          }
          Z = Z0 = (Z0 << q2) | Bloc;
          for (j = 0; j < q2; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3243,20 +3143,18 @@ static void OverHashGenereBits (
             Z = Z0 = (Z0 << q1) | (Bloc >> (q3 + (t3 - k) * q1));
             for (j = 0; j < q1; j++) {
                Indice = Z & MASK1;
-               UpdateCountHash (res, Indice, Hache11, UnSurHache11,
-                  CoMax1, TRUE);
+               UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
                Indice = Z & MASK;
-               UpdateCountHash (res, Indice, Hache1, UnSurHache1,
-                  CoMax, FALSE);
+               UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
                Z >>= 1;
             }
          }
          Z = Z0 = (Z0 << q3) | Bloc;
          for (j = 0; j < q3; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3268,20 +3166,18 @@ static void OverHashGenereBits (
             Z = Z0 = (Z0 << q1) | (Bloc >> (q2 + (t2 - k) * q1));
             for (j = 0; j < q1; j++) {
                Indice = Z & MASK1;
-               UpdateCountHash (res, Indice, Hache11, UnSurHache11,
-                  CoMax1, TRUE);
+               UpdateCountHash (res, Indice, Hache11, CoMax1, TRUE);
                Indice = Z & MASK;
-               UpdateCountHash (res, Indice, Hache1, UnSurHache1,
-                  CoMax, FALSE);
+               UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
                Z >>= 1;
             }
          }
          Z = Z0 = (Z0 << q2) | Bloc;
          for (j = 0; j < q2; j++) {
             Indice = Z & MASK1;
-            UpdateCountHash (res, Indice, Hache11, UnSurHache11, CoMax1, TRUE);
+            UpdateCountHash (res, Indice, Hache11,  CoMax1, TRUE);
             Indice = Z & MASK;
-            UpdateCountHash (res, Indice, Hache1, UnSurHache1, CoMax, FALSE);
+            UpdateCountHash (res, Indice, Hache1, CoMax, FALSE);
             Z >>= 1;
          }
       }
@@ -3398,22 +3294,11 @@ static void MultinomOver (unif01_Gen * gen, smultin_Param * par,
 
       if (swrite_Counters) {
          if (res->Hashing) {
-#ifdef USE_LONGLONG
-            tables_WriteTabULL (res->Nb, 0, CoMax, 5, 12,
-               "Observed numbers in res->Nb");
-            tables_WriteTabULL (res->Nb1, 0, CoMax1, 5, 12,
-               "Observed numbers in res->Nb1");
-#else
-            tables_WriteTabD (res->Nb, 0, CoMax, 5, 12, 0, 0,
-               "Observed numbers in res->Nb");
-            tables_WriteTabD (res->Nb1, 0, CoMax1, 5, 12, 0, 0,
-               "Observed numbers in res->Nb1");
-#endif
+            tables_WriteTabULL (res->Nb,  0, CoMax,  5, 12, "Observed numbers in res->Nb");
+            tables_WriteTabULL (res->Nb1, 0, CoMax1, 5, 12, "Observed numbers in res->Nb1");
          } else if (!Sparse) {
-            tables_WriteTabL (res->Count, 0, res->CountSize - 1, 5,
-               10, "Observed numbers in res->Count");
-            tables_WriteTabL (res->Count1, 0, res->Count1Size - 1, 5,
-               10, "Observed numbers in res->Count1");
+            tables_WriteTabL (res->Count,  0, res->CountSize  - 1, 5, 10, "Observed numbers in res->Count");
+            tables_WriteTabL (res->Count1, 0, res->Count1Size - 1, 5, 10, "Observed numbers in res->Count1");
          }
       }
 
@@ -3550,10 +3435,7 @@ void smultin_MultinomialOver (unif01_Gen * gen, smultin_Param * par,
       util_Assert (d > 1, "smultin_MultinomialOver:   d <= 1");
    util_Assert (k <= smultin_env.Maxk,
       "smultin_MultinomialOver:   d^t > Maxk");
-#ifndef USE_LONGLONG
-   util_Assert (NbExp > 1.0 / num_TwoExp[31],
-      "smultin_MultinomialOver:   NbExp <= 1/2^31");
-#endif
+
    MultinomOver (gen, par, res, N, n, r, d, t, Sparse, k, k1,
                  TestName, Timer, FALSE);
    chrono_Delete (Timer);
@@ -3604,10 +3486,7 @@ void smultin_MultinomialBits (unif01_Gen *gen, smultin_Param *par,
    util_Assert (k <= smultin_env.Maxk,
       "smultin_MultinomialBits:   k > Maxk");
    util_Assert (n > 4, "smultin_MultinomialBits:   n <= 4");
-#ifndef USE_LONGLONG
-   util_Assert ((double) n / k > 1.0 / num_TwoExp[31],
-      "smultin_MultinomialBits:   NbExp <= 1/2^31");
-#endif
+
    Multinom (gen, par, res, N, n, r, L, s, Sparse, k, TestName, Timer, TRUE);
    chrono_Delete (Timer);
 }
@@ -3636,10 +3515,7 @@ void smultin_MultinomialBitsOver (unif01_Gen * gen, smultin_Param * par,
    util_Assert (s > 0, "smultin_MultinomialBitsOver:   s < 1");
    util_Assert (k <= smultin_env.Maxk,
       "smultin_MultinomialBitsOver:   L too large");
-#ifndef USE_LONGLONG
-   util_Assert (NbExp > 1.0 / num_TwoExp[31],
-      "smultin_MultinomialBitsOver:   NbExp <= 1/2^31");
-#endif
+
    MultinomOver (gen, par, res, N, n, r, L, s, Sparse, k, k1,
                  TestName, Timer, TRUE);
 

@@ -40,6 +40,7 @@
 
 /*---------------------------- Extern variables ---------------------------*/
 
+// TODO: constant
 #ifdef USE_LONGLONG
 double smarsa_Maxk = 18446744073709551616.0;   /* 2^64 */ 
 #else

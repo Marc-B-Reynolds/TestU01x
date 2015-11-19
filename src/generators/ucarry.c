@@ -73,7 +73,7 @@ typedef struct {
 } Ranlux_state;
 
 /*-----------------------------------------------------------------------*/
-#ifdef USE_LONGLONG
+
 
 typedef struct {
    unsigned long *A;
@@ -89,7 +89,6 @@ typedef struct {
    unsigned int Order;             /* Order */
 } MWC_state;
 
-#endif
 /*-----------------------------------------------------------------------*/
 
 typedef struct {
@@ -517,7 +516,6 @@ void ucarry_DeleteRanlux (unif01_Gen * gen)
 
 
 /************************************************************************/
-#ifdef USE_LONGLONG
 
 static unsigned long MWC_Bits (void *vpar, void *vsta)
 {
@@ -652,7 +650,7 @@ void ucarry_DeleteMWC (unif01_Gen * gen)
 }
 
 
-#endif  /* USE_LONGLONG */
+
 /**************************************************************************/
 
 static unsigned long MWCFloat_Bits (void *vpar, void *vsta)

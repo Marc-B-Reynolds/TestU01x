@@ -1,31 +1,6 @@
 /*************************************************************************\
- *
- * Package:        MyLib
- * File:           mystr.c
- * Environment:    ANSI C
- *
- * Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
- * e-mail: lecuyer@iro.umontreal.ca
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted without a fee for private, research,
- * academic, or other non-commercial purposes.
- * Any use of this software in a commercial environment requires a
- * written licence from the copyright owner.
- *
- * Any changes made to this package must be clearly identified as such.
- *
- * In scientific publications which used this software, a reference to it
- * would be appreciated.
- *
- * Redistributions of source code must retain this copyright notice
- * and the following disclaimer.
- *
- * THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
+* Copyright (c) 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
+* SEE: LICENSE
 \*************************************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -40,7 +15,7 @@
 void mystr_Delete (char S[], unsigned int index, unsigned int len)
 {
    int i;
-   unsigned int length = strlen (S);
+   size_t length = strlen (S);
    if (index + len > length)
       S[index] = '\0';
    else
@@ -52,11 +27,11 @@ void mystr_Delete (char S[], unsigned int index, unsigned int len)
 void mystr_Insert (char Res[], char Source[], unsigned int Pos)
 {
    int i;
-   unsigned int ResLength = strlen (Res);
-   unsigned int SourceLength = strlen (Source);
+   size_t ResLength = strlen (Res);
+   size_t SourceLength = strlen (Source);
    if (Pos > ResLength)
       util_Error ("mystr_Insert : Index out of array bound.");
-   for (i = ResLength; (unsigned) i >= Pos; --i) {
+   for (i = (unsigned)ResLength; (unsigned) i >= Pos; --i) {
       Res[i + SourceLength] = Res[i]; /* end of Res */
    }
    for (i = Pos; (unsigned) i < Pos + SourceLength; ++i)
@@ -86,8 +61,8 @@ static int mystr_Rmatch (char s[], unsigned int i, char p[], unsigned int j)
 {
    int matched;
    unsigned int k;
-   unsigned int s_len = strlen (s);
-   unsigned int p_len = strlen (p);
+   size_t s_len = strlen (s);
+   size_t p_len = strlen (p);
    if (p[0] == 0)
       return 1;
    for (;;) {
@@ -146,8 +121,8 @@ void mystr_Slice (char R[], char S[], unsigned int P, unsigned int L)
 
 void mystr_Subst (char source[], char OldPattern[], char NewPattern[])
 {
-   unsigned int len;
-   unsigned int index;
+   size_t len;
+   size_t index;
    char *PatternFound;
    PatternFound = strstr (source, OldPattern);
    if (PatternFound != NULL) {
@@ -166,7 +141,7 @@ void mystr_Position (char Substring[], char Source[], unsigned int at,
    if (at > strlen (Source))
       util_Error ("mystr_Position : Index out of array bound.");
    if (result != NULL) {
-      *pos = result - Source;
+      *pos = (unsigned int)(result - Source);
       *found = 1;
    } else
       *found = 0;

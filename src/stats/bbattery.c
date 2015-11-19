@@ -3056,8 +3056,8 @@ static void DoMultinom (lebool fileFlag, /* */
 {
    const long NLIM = 10000000;
    long n, N;
-   int L, t;
-   double x;
+   int L;//, t;
+   //double x;
    int i;
    int j = *pj;
    smultin_Res *res;

@@ -185,7 +185,7 @@ static void FillBinArray (void)
  * Read bits, at most Dim2 bytes.
  */
 {
-   MaxBin = fread (X2, (size_t) 1, (size_t) Dim2, f2);
+   MaxBin = (uint32_t)fread (X2, (size_t) 1, (size_t) Dim2, f2);
    n2 = 0;
 }
 

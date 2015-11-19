@@ -294,8 +294,9 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ControlFlowGuard>false</ControlFlowGuard>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -357,6 +358,7 @@
     <ClCompile Include="..\..\src\probdist\gofw.c" />
     <ClCompile Include="..\..\src\probdist\statcoll.c" />
     <ClCompile Include="..\..\src\probdist\wdist.c" />
+    <ClCompile Include="..\..\src\stats\adaptive_crush.c" />
     <ClCompile Include="..\..\src\stats\bbattery.c" />
     <ClCompile Include="..\..\src\stats\scatter.c" />
     <ClCompile Include="..\..\src\stats\scomp.c" />
