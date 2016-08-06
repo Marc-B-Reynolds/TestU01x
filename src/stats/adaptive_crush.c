@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "TestU01.h"
 #include "util.h"
 #include "bbattery.h"
@@ -29,6 +31,8 @@
 #include <limits.h>
 
 #include "adaptive_crush.h"
+
+
 
 #define LEN 120
 #define NAMELEN 30
@@ -65,7 +69,7 @@ static int TestNumber[1 + NDIM] = { 0 };
 static void GetName (unif01_Gen * gen, char *genName)
 {
    char *p;
-   int len1, len2;
+   size_t len1, len2;
 
    if (NULL == gen) {
       genName[0] = '\0';

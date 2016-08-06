@@ -313,8 +313,8 @@ static void TabSumCollector (ffam_Fam *fam, void *res1, void *cho,
    fres_Cont *fres = res1;
    sres_Chi2 *sres;
 
-   N = Par[0];
-   r = Par[1];
+   N = (long)Par[0];
+   r = (long)Par[1];
    g = Par[2];
 
    n = fcho_ChooseParamL (cho, (long) (3.0 * gofs_MinExpected),
@@ -378,7 +378,7 @@ static void TabAppearance (ffam_Fam *fam, void *res1, void *cho,
       return ;
    if ((s > L) && (s % L))
       return ;
-   Q = num_TwoExp[L + 4];
+   Q = (long)num_TwoExp[L + 4];
    if (Q > fvaria_MaxK) {
       printf ("Q > %ld\n\n", fvaria_MaxK);
       return;
@@ -438,10 +438,10 @@ static void TabWeightDistrib (ffam_Fam *fam, void *res1, void *cho,
    fcho_Cho *chon;
    fcho_Cho *chok;
 
-   N = Par[0];
-   n = Par[1];
-   r = Par[2];
-   k = Par[3];
+   N = (long)Par[0];
+   n = (long)Par[1];
+   r = (int)Par[2];
+   k = (long)Par[3];
    alpha = Par[4];
    beta = Par[5];
 

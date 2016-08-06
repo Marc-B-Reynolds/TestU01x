@@ -200,12 +200,12 @@ static void PrintLog2 (double d)
    if (d <= gofw_Epsilonp) {
       printf ("    inf    ");
    } else if (d <= SuspectLog2pval) {
-      s = 0.5 - num_Log2 (d);
+      s = (int)(0.5 - (int)num_Log2 (d));
       printf ("     %2d    ", s);
    } else if (d >= 1.0 - gofw_Epsilonp1) {
       printf ("   -inf    ");
    } else if (d >= 1.0 - SuspectLog2pval) {
-      s = 0.5 - num_Log2 (1.0 - d);
+      s = (int)(0.5 - (int)num_Log2 (1.0 - d));
       if (s > 9)
          printf ("    ");
       else
@@ -227,12 +227,12 @@ static void PrintLog2Tex (double d)
    if (d <= gofw_Epsilonp) {
       printf (" & $\\infty$  ");
    } else if (d <= SuspectLog2pval) {
-      s = 0.5 - num_Log2 (d);
+      s = (int)(0.5 - num_Log2 (d));
       printf (" &  %3d   ", s);
    } else if (d >= 1.0 - gofw_Epsilonp1) {
       printf (" & $-\\infty$ ");
    } else if (d >= 1.0 - SuspectLog2pval) {
-      s = 0.5 - num_Log2 (1.0 - d);
+      s = (int)(0.5 - num_Log2 (1.0 - d));
       if (s > 9)
          printf (" &  $-");
       else
@@ -256,12 +256,12 @@ static void PrintLog10 (double d)
    if (d <= gofw_Epsilonp) {
       printf ("    inf   ");
    } else if (d <= ftab_Suspectp) {
-      s = 0.5 - log10 (d);
+      s = (int)(0.5 - log10 (d));
       printf ("     %2d    ", s);
    } else if (d >= 1.0 - gofw_Epsilonp1) {
       printf ("   -inf   ");
    } else if (d >= 1.0 - ftab_Suspectp) {
-      s = 0.5 - log10 (1.0 - d);
+      s = (int)(0.5 - log10 (1.0 - d));
       if (s > 9)
          printf ("    ");
       else
@@ -284,12 +284,12 @@ static void PrintLog10Tex (double d)
    if (d <= gofw_Epsilonp) {
       printf (" &  $\\infty$  ");
    } else if (d <= ftab_Suspectp) {
-      s = 0.5 - log10 (d);
+      s = (int)(0.5 - log10 (d));
       printf (" &  %3d   ", s);
    } else if (d >= 1.0 - gofw_Epsilonp1) {
       printf (" & $-\\infty$ ");
    } else if (d >= 1.0 - ftab_Suspectp) {
-      s = 0.5 - log10 (1.0 - d);
+      s = (int)(0.5 - log10 (1.0 - d));
       if (s > 9)
          printf (" &  $-");
       else
@@ -315,7 +315,7 @@ static void PrintVal (ftab_Table * T, double d, ftab_FormType Form)
       printf ("      ---  ");
    } else if (Form == ftab_String) {
       printf ("   ");
-      s = 0.5 + d;
+      s = (int)(0.5 + d);
       printf ("%s", T->Strings[s]);
    } else if (Form == ftab_Integer) {
       printf ("   ");
@@ -360,7 +360,7 @@ static void PrintValTex (ftab_Table * T, double d, ftab_FormType Form)
       printf (" &   ---   ");
    } else if (Form == ftab_String) {
       printf (" & ");
-      s = d + 0.5;
+      s = (int)(d + 0.5);
       printf ("%s", T->Strings[s]);
    } else if (Form == ftab_Integer) {
       printf (" & ");

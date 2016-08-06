@@ -211,7 +211,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
                        long N, long n, int r, int s)
 {
   const double epsilon = 1.0E-10;
-   const int tt = 1 - 0.5 * num_Log2 (3 * epsilon); /* Dimension */
+   const int tt = (int)(1 - 0.5 * num_Log2 (3 * epsilon)); /* Dimension */
    const long K0 = n/s;
    long i, Seq;
    int j, k;
@@ -224,7 +224,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
    int Parite;
    double *Prob;
    long *Loca;
-   long tmin, tmax, NbClasses;
+   long tmin=0, tmax=0, NbClasses=0;
    double X2;
    double temp;
    int *Bits;                     /* 4 Arrays of bits */
@@ -255,7 +255,7 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
            + (6 + Parite) * temp / 18.0 - temp * temp / 9.0;
    sigma = sqrt (sigma);
    muComp = n / 2.0 + (4 + Parite) / 18.0;
-   M0 = num_Log2 (mu / gofs_MinExpected);
+   M0 = (int)num_Log2 (mu / gofs_MinExpected);
    if (M0 < 2) {
       /* 0 degree of freedom for the chi2, do not do the test JL. */
       JL_OK = FALSE;
@@ -341,9 +341,9 @@ void scomp_LinearComp (unif01_Gen *gen, scomp_Res *res,
          /* comp is now an integer: truncate correctly and avoid off-by-1
             error because of small floating-point inaccuracies. */
 	 if (comp >= 0.0)
-	    k = comp + 0.5;
+	    k = (int)(comp + 0.5);
 	 else
-	    k = comp - 0.5;
+	    k = (int)(comp - 0.5);
 	 if (k < 0)
 	    k = -k;
 	 if (k >= tt)
@@ -465,7 +465,7 @@ static void WriteDataLZ (
 )
 {
    long n;
-   n = num_TwoExp[k];
+   n = (long)num_TwoExp[k];
    swrite_Head (gen, Test, N, n, r);
    printf (",   s = %4d,   k = %4d\n\n", s, k);
 }
@@ -561,7 +561,7 @@ void scomp_LempelZiv (unif01_Gen *gen, sres_Basic *res,
       localRes = TRUE;
       res = sres_CreateBasic ();
    }
-   n = num_TwoExp[t];
+   n = (long)num_TwoExp[t];
    sres_InitBasic (res, N, "scomp_LempelZiv");
    statcoll_SetDesc (res->sVal1, "sVal1:   a standard normal");
 

@@ -891,6 +891,7 @@ unif01_Gen *ucarry_CreateMWCfix8r8 (unsigned long c, unsigned long S[])
 
 static unsigned long MWCfixCouture_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    MWCfixCouture_state *state = vsta;
    unsigned int s1, s3;
    unsigned int s2 = state->C;

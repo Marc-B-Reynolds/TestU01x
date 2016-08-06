@@ -186,45 +186,17 @@ void tables_QuickSortL (long T[], int l, int r)
 
 
 /*=======================================================================*/
-#ifdef USE_LONGLONG
 
-void tables_QuickSortLL (longlong T[], int l, int r)
-{
-   int j;
-   int i;
-   longlong w;
-   longlong x;
-   i = l;
-   j = r;
-   x = T[(l + r) / 2];
-   do {
-      while (T[i] < x)
-         ++i;
-      while (x < T[j])
-         --j;
-      if (i <= j) {
-         w = T[i];
-         T[i] = T[j];
-         T[j] = w;
-         ++i;
-         --j;
-      }
-   } while (i <= j);
-   if (l < j)
-      tables_QuickSortLL (T, l, j);
-   if (i < r)
-      tables_QuickSortLL (T, i, r);
-}
-
-void tables_QuickSortULL (ulonglong T[], int l, int r)
+// TODO: This is a killer (smarsa_BirthdaySpacings)
+void tables_QuickSortULL (ulonglong T[], int lo, int hi)
 {
   int j;
   int i;
   ulonglong w;
   ulonglong x;
-  i = l;
-  j = r;
-  x = T[(l + r) / 2];
+  i = lo;
+  j = hi;
+  x = T[(lo + hi) / 2];
   
   do {
     while (T[i] < x)
@@ -241,14 +213,13 @@ void tables_QuickSortULL (ulonglong T[], int l, int r)
   } while (i <= j);
   
   
-  if (l < j)
-    tables_QuickSortULL (T, l, j);
+  if (lo < j)
+    tables_QuickSortULL (T, lo, j);
   
-  if (i < r)
-    tables_QuickSortULL (T, i, r);
+  if (i < hi)
+    tables_QuickSortULL (T, i, hi);
 }
 
-#endif
 /*=======================================================================*/
 
 void tables_WriteTabL (long V[], int n1, int n2, int k, int p, char Desc[])
@@ -418,10 +389,10 @@ void tables_WriteMatrixD (double **Mat, int i1, int i2, int j1, int j2,
    int m;
    int j;
    int i;
-   unsigned int bidon;
+   size_t bidon;
    double prec;
    double x;
-   int trouve;
+   size_t trouve;
    char S[32];
 
    FixeDelim (style);

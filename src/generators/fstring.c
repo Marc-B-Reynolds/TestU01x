@@ -178,7 +178,7 @@ static int ChooseParam (int prec, void *cho, cho_Type ver,
 
    if (*pn < 0) {
       util_Assert (chon, "fstring:   n < 0 and chon is NULL");
-      *pn = chon->Choose (chon->param, i, j);
+      *pn = (long)chon->Choose (chon->param, i, j);
 
       if (*pn <= 3.0 * gofs_MinExpected) {
 	 printf ("n is too small\n\n");
@@ -196,7 +196,7 @@ static int ChooseParam (int prec, void *cho, cho_Type ver,
 
    if (*pL < 0) {
       util_Assert (choL, "fstring:   L < 0 and choL is NULL");
-      *pL = choL->Choose (choL->param, i, j);
+      *pL = (long)choL->Choose (choL->param, i, j);
 
       if (*pL <= LMin) {
 	 printf ("L is too small\n\n");

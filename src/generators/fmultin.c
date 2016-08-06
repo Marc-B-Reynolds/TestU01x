@@ -318,7 +318,7 @@ static double CheckK1 (void *vpar, double K, long n)
       break;
 
    case B_2HT:
-      h = 0.5 + num_Log2(K) / Par->t;
+      h = (int)(0.5 + num_Log2(K) / Par->t);
       d = num_TwoExp[h];
       strcpy (Par->name, "d");
       if (d > LONG_MAX)
@@ -328,7 +328,7 @@ static double CheckK1 (void *vpar, double K, long n)
       break;
 
    case B_2L:
-      L = 0.5 + num_Log2(K);
+      L = (int)(0.5 + num_Log2(K));
       strcpy (Par->name, "L");
       return L;
       break;
@@ -359,6 +359,9 @@ static double CheckK1 (void *vpar, double K, long n)
 
 static void WriteEC (void *vpar, long junk1, long junk2)
 {
+	junk1 = junk1;
+	junk2 = junk2;
+
    Multin_Param *Par = vpar;
    switch (Par->kcho) {
    case B_DT:
@@ -384,6 +387,7 @@ static void WriteEC (void *vpar, long junk1, long junk2)
 
 static double ChooseEC (void *vpar, long junk, long n)
 {
+	junk = junk;
    Multin_Param *Par = vpar;
    double K;
    WriteEC (vpar, 0, 0);
@@ -452,6 +456,8 @@ fcho_Cho * fmultin_CreateEC_T (long N, double EC)
 
 static void WriteDens (void *vpar, long junk1, long junk2)
 {
+	junk1 = junk1;
+	junk2 = junk2;
    Multin_Param *Par = vpar;
    switch (Par->kcho) {
    case B_DT:
@@ -482,6 +488,7 @@ static void WriteDens (void *vpar, long junk1, long junk2)
 
 static double ChooseDens (void *vpar, long junk, long n)
 {
+	junk = junk;
    Multin_Param *Par = vpar;
    double K;
    WriteDens (vpar, 0, 0);
@@ -534,7 +541,6 @@ fcho_Cho * fmultin_CreateDens_2L (double R)
    return cho;
 }
 
-/*-------------------------------------------------------------------------*/
 
 fcho_Cho * fmultin_CreateDens_T (double R)
 {
@@ -546,10 +552,11 @@ fcho_Cho * fmultin_CreateDens_T (double R)
 }
 
 
-/*=========================================================================*/
 
 static void WritePer (void *vpar, long junk1, long junk2)
 {
+	junk1 = junk1;
+	junk2 = junk2;
    Multin_Param *Par = vpar;
    switch (Par->kcho) {
    case B_DT:
@@ -576,7 +583,6 @@ static void WritePer (void *vpar, long junk1, long junk2)
    printf ("\n\n");
 }
 
-/*-------------------------------------------------------------------------*/
 
 static double ChoosePer (void *vpar, long lsize, long n)
 {
@@ -588,7 +594,6 @@ static double ChoosePer (void *vpar, long lsize, long n)
 }
 
 
-/*=========================================================================*/
 
 void fmultin_DeletePer (fcho_Cho * cho)
 {

@@ -195,8 +195,7 @@ MODIFIED:
   *(r++) = b = ind(mm,y>>RANDSIZL) + x; \
 }
 
-static void     isaac(ctx)
-randctx *ctx;
+static void     isaac(randctx *ctx)
 {
    register ub4 a,b,x,y,*m,*mm,*m2,*r,*mend;
    mm=ctx->randmem; r=ctx->randrsl;
@@ -232,9 +231,7 @@ randctx *ctx;
 }
 
 /* if (flag==TRUE), then use the contents of randrsl[] to initialize mm[]. */
-static void randinit(ctx, flag)
-randctx *ctx;
-word     flag;
+static void randinit(randctx *ctx, word     flag)
 {
    word i;
    ub4 a,b,c,d,e,f,g,h;
@@ -293,6 +290,7 @@ static randctx ctx;
 
 static unsigned long ISAAC_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
   return rand(&ctx);
 }
 

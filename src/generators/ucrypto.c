@@ -331,6 +331,7 @@ void ucrypto_DeleteAES (unif01_Gen * gen)
 
 static unsigned long SHA1_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    SHA1_state *state = vsta;
    int k;
    unsigned long Z = 0;

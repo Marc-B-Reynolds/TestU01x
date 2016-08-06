@@ -90,7 +90,7 @@ static int ReadOneLCGPow2 (char *Line, ffam_Fam * fam, int i)
 {
    int status;
    long a;
-   long mask = num_TwoExp[fam->LSize[i]] - 1.0;
+   long mask = (long)(num_TwoExp[fam->LSize[i]] - 1.0);
 
    /* Pass over LSize; it has been read already */
    if (fam->LSize[i] <= 31) {

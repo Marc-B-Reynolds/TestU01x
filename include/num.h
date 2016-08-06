@@ -46,20 +46,9 @@ extern double num_TENNEGPOW[];
 
 long num_RoundL (double x);
 
-
-
 double num_RoundD (double x);
-
-
-
 int num_IsNumber (char S[]);
-
-
-
 void num_IntToStrBase (long k, long b, char S[]);
-
-
-
 void num_Uint2Uchar (unsigned char output[], unsigned int input[], int L);
 
 

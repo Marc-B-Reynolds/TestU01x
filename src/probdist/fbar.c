@@ -31,76 +31,57 @@ static const double EpsArray[] = {
 /* Compute IMAX extra terms in the tails of discrete distributions */
 static const long IMAX = 20;
 
-
-
-/*=========================================================================*/
-
-double fbar_Unif (double x)
+double fbar_Unif(double x)
 {
-   if (x <= 0.0)
-      return 1.0;
-   if (x >= 1.0)
-      return 0.0;
-   return 1.0 - x;
+  if (x <= 0.0)
+    return 1.0;
+  if (x >= 1.0)
+    return 0.0;
+  return 1.0 - x;
 }
 
-
-/*=========================================================================*/
-
-double fbar_Expon (double x)
+double fbar_Expon(double x)
 {
-   if (x <= 0.0)
-      return 1.0;
-   if (x >= fdist_XBIGM)
-      return 0.0;
-   return exp (-x);
+  if (x <= 0.0)
+    return 1.0;
+  if (x >= fdist_XBIGM)
+    return 0.0;
+  return exp (-x);
 }
 
-
-/*=========================================================================*/
-
-double fbar_Weibull (double c, double x)
+double fbar_Weibull(double c, double x)
 {
-   double temp;
-   util_Assert (c > 0.0, "fbar_Weibull:   c <= 0");
-   if (x <= 0.0)
-      return 1.0;
-   if (x >= DBL_MAX_EXP * FLT_RADIX && c >= 1.0)
-      return 0.0;
-   temp = c*log(x);
-   if (temp >= DBL_MAX_EXP * num_Ln2)
-      return 0.0;
-   temp = exp(temp);
-   return (exp (-temp));
+  double temp;
+  util_Assert (c > 0.0, "fbar_Weibull:   c <= 0");
+  if (x <= 0.0)
+    return 1.0;
+  if (x >= DBL_MAX_EXP * FLT_RADIX && c >= 1.0)
+    return 0.0;
+  temp = c*log(x);
+  if (temp >= DBL_MAX_EXP * num_Ln2)
+    return 0.0;
+  temp = exp(temp);
+  return (exp (-temp));
 }
-
-
-/*=========================================================================*/
 
 double fbar_Logistic (double x)
 {
-   if (x <= -fdist_XBIG) {
-      return 1.0;
-   }
-   if (x >= fdist_XBIG) {
-      return exp (-x);
-   }
-   return 1.0 / (1.0 + exp (x));
+  if (x <= -fdist_XBIG) {
+    return 1.0;
+  }
+  if (x >= fdist_XBIG) {
+    return exp (-x);
+  }
+  return 1.0 / (1.0 + exp (x));
 }
 
-
-/*=========================================================================*/
-
-double fbar_Pareto (double c, double x)
+double fbar_Pareto(double c, double x)
 {
-
-   util_Assert (c > 0.0, "fbar_Pareto:   c <= 0");
-   if (x <= 1.0)
-      return 1.0;
-   return (pow (x, -c));
+  util_Assert (c > 0.0, "fbar_Pareto:   c <= 0");
+  if (x <= 1.0)
+    return 1.0;
+  return (pow (x, -c));
 }
-
-/**************************************************************************/
 
 double fbar_Normal1 (double x)
 /*
@@ -109,7 +90,7 @@ double fbar_Normal1 (double x)
  * precise in the tail.
  */
 {
-   static const double A[25] = {
+  static const double A[25] = {
       6.10143081923200418E-1,
      -4.34841272712577472E-1,
       1.76351193643605501E-1,
@@ -136,36 +117,34 @@ double fbar_Normal1 (double x)
       2.08998378E-17,
      -0.5900E-17
    };
-   const double kk = 5.30330085889910643300;      /* 3.75 Sqrt(2) */
-   double y, t;
-   int Neg;
-
-   if (x >= fdist_XBIG) {
-      return 0.0;
-   }
-   if (x <= -fdist_XBIG) {
-      return 1.0;
-   }
-
-   if (x >= 0.0)
-      Neg = 0;
+  const double kk = 5.30330085889910643300;      /* 3.75 Sqrt(2) */
+  double y, t;
+  int Neg;
+  
+  if (x >= fdist_XBIG) {
+    return 0.0;
+  }
+  if (x <= -fdist_XBIG) {
+    return 1.0;
+  }
+  
+  if (x >= 0.0)
+    Neg = 0;
    else {
-      Neg = 1;
-      x = -x;
+     Neg = 1;
+     x = -x;
    }
-
-   t = (x - kk) / (x + kk);
-   y = num2_EvalCheby (A, 24, t);
-   y = y * exp (-x * x / 2.0) / 2.0;
-
-   if (Neg == 1)
-      return (1.0 - y);
-   else
-      return (y);
+  
+  t = (x - kk) / (x + kk);
+  y = num2_EvalCheby (A, 24, t);
+  y = y * exp (-x * x / 2.0) / 2.0;
+  
+  if (Neg == 1)
+    return (1.0 - y);
+  else
+    return (y);
 }
 
-
-/*=========================================================================*/
 
 double fbar_Normal2 (double x)
 {
@@ -211,50 +190,49 @@ double fbar_Normal2 (double x)
     0.06983483721825942,    0.06923334210724434,    0.06864207314371742,
     0.06806077288496332,     0.0674891924209997,    0.06692709102543307,
     0.06637423582325017
-};
+   };
 
-   int j;
-   lebool negatif;
-   double t, u, z, h;
-   double r, r1, r2, r3, r4, r5, r6, r7, r8;
-
-   if (x >= fdist_XBIG) {
-      return 0.0;
-   }
-   if (x <= -fdist_XBIG) {
-      return 1.0;
-   }
-   if (x < 0.0) {
-      negatif = TRUE;
-      x = -x;
-   } else {
-      negatif = FALSE;
-   }
-   j = (int) (8.0 * x + 0.5);
-   if (j > 120)
-      j = 120;
-   z = 0.125 * j;
-   h = x - z;
-   r = V[j];
-   r1 = r * z - 1.0;
-   r2 = 0.5 * (r + z * r1);
-   r3 = (r1 + z * r2) / 3.0;
-   r4 = 0.25 * (r2 + z * r3);
-   r5 = 0.2 * (r3 + z * r4);
-   r6 = (r4 + z * r5) / 6.0;
-   r7 = (r5 + z * r6) / 7.0;
-   r8 = 0.125 * (r6 + z * r7);
-   t = r + h * (r1 + h * (r2 + h * (r3 + h * (r4 + h * (r5 + h * (r6 +
-                h * (r7 + h * r8)))))));
-   u = t * exp (-0.5 * x * x - 0.9189385332046727);
-   if (negatif)
-      return 1.0 - u;
-   else
-      return u;
+  int j;
+  lebool negatif;
+  double t, u, z, h;
+  double r, r1, r2, r3, r4, r5, r6, r7, r8;
+  
+  if (x >= fdist_XBIG) {
+    return 0.0;
+  }
+  if (x <= -fdist_XBIG) {
+    return 1.0;
+  }
+  if (x < 0.0) {
+    negatif = TRUE;
+    x = -x;
+  } else {
+    negatif = FALSE;
+  }
+  j = (int) (8.0 * x + 0.5);
+  if (j > 120)
+    j = 120;
+  z = 0.125 * j;
+  h = x - z;
+  r = V[j];
+  r1 = r * z - 1.0;
+  r2 = 0.5 * (r + z * r1);
+  r3 = (r1 + z * r2) / 3.0;
+  r4 = 0.25 * (r2 + z * r3);
+  r5 = 0.2 * (r3 + z * r4);
+  r6 = (r4 + z * r5) / 6.0;
+  r7 = (r5 + z * r6) / 7.0;
+  r8 = 0.125 * (r6 + z * r7);
+  t = r + h * (r1 + h * (r2 + h * (r3 + h * (r4 + h * (r5 + h * (r6 +
+								 h * (r7 + h * r8)))))));
+  u = t * exp (-0.5 * x * x - 0.9189385332046727);
+  if (negatif)
+    return 1.0 - u;
+  else
+    return u;
 }
 
 
-/*=========================================================================*/
 #ifdef HAVE_ERF
 
 double fbar_Normal3 (double x)
@@ -263,7 +241,6 @@ double fbar_Normal3 (double x)
 }
 
 #endif
-/*=========================================================================*/
 
 double fbar_BiNormal1 (double x, double y, double rho, int ndig)
 {
@@ -271,15 +248,11 @@ double fbar_BiNormal1 (double x, double y, double rho, int ndig)
 }
 
 
-/*=========================================================================*/
-
 double fbar_BiNormal2 (double x, double y, double rho)
 {
    return fdist_BiNormal2 (-x, -y, rho);
 }
 
-
-/*=========================================================================*/
 
 double fbar_LogNormal (double mu, double sigma, double x)
 {
@@ -288,9 +261,6 @@ double fbar_LogNormal (double mu, double sigma, double x)
       return 1.0;
    return fbar_Normal1 ((log (x) - mu) / sigma);
 }
-
-
-/*=========================================================================*/
 
 double fbar_JohnsonSB (double alpha, double beta, double a, double b,
    double x)
@@ -304,8 +274,6 @@ double fbar_JohnsonSB (double alpha, double beta, double a, double b,
    return fbar_Normal1 (alpha + beta * log ((x - a) / (b - x)));
 }
 
-
-/*=========================================================================*/
 
 double fbar_JohnsonSU (double alpha, double beta, double x)
 {
@@ -331,8 +299,6 @@ double fbar_JohnsonSU (double alpha, double beta, double x)
       return 1.0;
 }
 
-
-/*=========================================================================*/
 
 static double F2AD[103];          /* Tables for the approximation of the */
 static double CoAD[103];          /* Anderson-Darling distribution */
@@ -1283,6 +1249,3 @@ double fbar_NegaBin2 (fmass_INFO W, long s)
       return 1.0 - W->cdf[s - 1 - W->smin];
 
 }
-
-
-/*=========================================================================*/

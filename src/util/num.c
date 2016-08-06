@@ -295,14 +295,14 @@ double num_MultModD (double a, double s, double c, double m)
    long k;
    V = a * s + c;
    if (V >= Deux53 || -V >= Deux53) {
-      k = a * UnDeux17;
+      k = (long)(a * UnDeux17);
       a -= k * Deux17;
       V = k * s;
-      k = V / m;
+      k = (long)(V / m);
       V -= k * m;
       V = V * Deux17 + a * s + c;
    }
-   k = V / m;
+   k = (long)(V / m);
    V -= k * m;
    if (V < 0)
       V += m;

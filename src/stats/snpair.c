@@ -351,6 +351,7 @@ void snpair_VerifPairs0 (snpair_Res * res, snpair_PointType A[], long r,
  * the points are sorted with respect to coordinate c.
  */
 {
+	junk1 = junk1;junk2 = junk2;
    long i, j;
    for (i = r; i < s; i++) {
       for (j = i + 1; j <= s; j++) {
@@ -481,6 +482,7 @@ void snpair_MiniProc0 (snpair_Res * res, snpair_PointType T[], long r,
  * of T[u..v].
  */
 {
+	junk1 = junk1;junk2 = junk2;
    long i, j;
 
    for (i = r; i <= s; i++)
@@ -1401,14 +1403,14 @@ void snpair_ClosePairs (unif01_Gen * gen, snpair_Res * res,
    long j;
    long i;
    long Seq;
-   double Wn;
+   double Wn=0;
    double t1;
    snpair_PointType T;
    double x;
    double NextJump;
    double Jump;
    double mu2;                    /* Expected minimum distance */
-   double A2;
+   double A2 = 0;
    double Vol;                    /* Volume of unit sphere in k dimension */
    double mLR, nLR, kLR;
    fmass_INFO Mass;

@@ -23,6 +23,7 @@
 
 *.exe
 *.out
+*.txt
 
 # Visual Studio Junk
 *.suo

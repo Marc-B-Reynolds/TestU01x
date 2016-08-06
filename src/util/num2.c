@@ -467,7 +467,7 @@ double num2_VolumeSphere (double pLR, int k)
 /* Returns volume of unit sphere in dimension k, norm p */
 {
    const double eps = 2.0 * DBL_EPSILON;
-   int p = pLR;
+   int p = (int)pLR;
    double kLR = (double) k;
    double Vol;
    int s;
@@ -512,6 +512,7 @@ double num2_EvalCheby (const double A[], int N, double x)
    xx = 2.0 * x;
    b0 = 0.0;
    b1 = 0.0;
+   b2 = 0.0;
    for (j = N; j >= 0; j--) {
       b2 = b1;
       b1 = b0;

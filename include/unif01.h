@@ -161,9 +161,9 @@ void unif01_DeleteExternGenBitsL (unif01_Gen * gen);
 
 typedef struct {
    unif01_Gen *gen;
-   long n;
    double time;
    double mean;
+   long n;
    lebool fU01;
    } unif01_TimerRec;
 

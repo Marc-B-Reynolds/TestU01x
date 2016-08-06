@@ -119,7 +119,7 @@ static int CheckParamMat (int prec, void *cho,
    choL = cho2->Chop2;
    if (*pn < 0) {
       util_Assert (chon, "fmarsa:   n < 0 and chon is NULL");
-      *pn = chon->Choose (chon->param, i, j);
+      *pn = (long)chon->Choose (chon->param, i, j);
 
       if (*pn <= 3.0 * gofs_MinExpected) {
          printf ("n is too small\n\n");
@@ -137,7 +137,7 @@ static int CheckParamMat (int prec, void *cho,
 
    if (*pL < 0) {
       util_Assert (choL, "fmarsa:   L < 0 and chop2 is NULL");
-      *pL = choL->Choose (choL->param, i, j);
+      *pL = (long)choL->Choose (choL->param, i, j);
 
       if (*pL <= LMin) {
          printf ("L is too small\n\n");
@@ -215,6 +215,8 @@ void fmarsa_MatrixR1 (ffam_Fam * fam, fres_Cont * res, fcho_Cho2 * cho,
 
 static void WriteBirthEC (void *vpar, long junk1, long junk2)
 {
+	junk1 = junk1;
+	junk2 = junk2;
    double *Par = vpar;
    double EC = Par[2];
    printf ("Choose d such that EC = %f\n\n", EC);
@@ -225,12 +227,14 @@ static void WriteBirthEC (void *vpar, long junk1, long junk2)
 static double ChooseBirthEC (void *vpar, long n, long junk)
 {
    double *Par = vpar;
-   long N = Par[0];
-   int t = Par[1];
+   long N = (long)Par[0];
+   int t = (int)Par[1];
    double EC = Par[2];
    long d;
    double k, dr;
    double Mu;
+
+   junk = junk;
 
    WriteBirthEC (vpar, 0, 0);
    k = (N * (double) n * n * n) / (4.0 * EC);
@@ -238,7 +242,8 @@ static double ChooseBirthEC (void *vpar, long n, long junk)
       printf ("k >= %2.0f\n\n", smarsa_Maxk);
       return -1.0;
    }
-   d = dr = pow (k, 1.0 / t);
+   dr = pow (k, 1.0 / t);
+   d = (long)dr;
    if (dr > LONG_MAX) {
       printf ("d > LONG_MAX\n\n");
       return -1.0;
@@ -304,18 +309,18 @@ static int CheckParamBirth (int prec, void *cho,
    chon = cho2->Chon;
    chod = cho2->Chop2;
    util_Assert (chon, "fmarsa:   chon is NULL");
-   *pn = chon->Choose (chon->param, i, j);
+   *pn = (long)chon->Choose (chon->param, i, j);
    if (*pn > fmarsa_Maxn) {
       printf ("n > %2ld\n\n", fmarsa_Maxn);
       return -1;
    }
 
    util_Assert (chod, "fmarsa:   chop2 is NULL");
-   *pd = chod->Choose (chod->param, *pn, 0);
+   *pd = (long)chod->Choose (chod->param, *pn, 0);
    if (*pd <= 1.0)
       return -1;
 
-   s = num_Log2 ((double) *pd);
+   s = (int)num_Log2 ((double) *pd);
    if (*pr + s > prec) {
       printf ("r + Lg(d) > Resolution of generator\n\n");
       return -1;

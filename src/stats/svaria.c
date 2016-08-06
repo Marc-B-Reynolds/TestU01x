@@ -106,14 +106,14 @@ static double FDistMeans (
    int M;
    int i;
    double nLR = C[SAM_LIM];
-   int n = nLR;
+   int n = (int)nLR;
 
    if (x <= 0.0)
       return 0.0;
    if (x >= n)
       return 1.0;
 
-   M = x;
+   M = (int)x;
    Sum = 0.0;
    if (x < n / 2.0) {
       for (i = 0; i <= M; i++) {
@@ -299,7 +299,7 @@ static double FDistProd (
       return 0.0;
 
    vlog = log (x);
-   t = Par[0];
+   t = (int)Par[0];
    Sum = 1.0;
    vterm = 1.0;
    jterm = 1.0;
@@ -862,7 +862,7 @@ void svaria_SumCollector (unif01_Gen * gen, sres_Chi2 * res,
    sres_InitChi2 (res, N, jmax, "svaria_SumCollector");
    Loc = res->Loc;
 
-   res->jmin = g;
+   res->jmin = (long)g;
    res->jmax = jmax;
    Sum = 0.0;
    for (j = res->jmin; j < jmax; j++) {

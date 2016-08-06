@@ -201,8 +201,8 @@ unif01_Gen *utaus_CreateTausJ (unsigned int k, unsigned int q,
 {
    unif01_Gen *gen;
    Taus_param *param;
-   unsigned int pos;
-   int found;
+   size_t pos;
+   size_t found;
    size_t len;
    char str[LEN1 + 1] = "";
 

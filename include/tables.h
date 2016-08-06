@@ -34,7 +34,7 @@ void tables_QuickSortL (long T[], int n1, int n2);
 void tables_QuickSortD (double T[], int n1, int n2);
 
 #ifdef USE_LONGLONG
-   void tables_QuickSortLL (longlong T[], int n1, int n2);
+   //void tables_QuickSortLL (longlong T[], int n1, int n2);
    void tables_QuickSortULL (ulonglong T[], int n1, int n2);
 #endif
 

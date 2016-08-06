@@ -202,6 +202,7 @@ static void WrUnixRandom (void *junk)
 
 static double UnixRandom_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return random () / (1.0 + RAND_MAX);
 }
 

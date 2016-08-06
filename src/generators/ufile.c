@@ -50,6 +50,7 @@ static double NBin, NText; /* Number of calls to the generator */
 
 static void WrReadText (void *junk)
 {
+	junk = junk;
    printf (" %.0f  numbers have been read\n", NText);
 }
 
@@ -88,6 +89,9 @@ static double ReadText_U01 (void *junk1, void *junk2)
  * first element.
  */
 {
+	junk1 = junk1;
+	junk2 = junk2;
+
    if (n1 < MaxText) {
       NText += 1.0;
       return X1[n1++];
@@ -105,7 +109,6 @@ static double ReadText_U01 (void *junk1, void *junk2)
       strncat (S, "Not enough numbers in file for these test parameters.",
                  (size_t) 60);
       util_Error (S);
-      return -1.0;
    }
 }
 
@@ -223,7 +226,6 @@ static unsigned long ReadBin_Bits (void *vpar, void *vsta)
       strncat (S, "Not enough bits in file for these test parameters.",
                (size_t) 53);
       util_Error (S);
-      return 0;
    }
 }
 
@@ -238,6 +240,7 @@ static double ReadBin_U01 (void *vpar, void *vsta)
 
 static void WrReadBin (void *junk)
 {
+	junk = junk;
    printf (" %.0f  bits have been read.\n", NBin * 32.0);
 }
 
@@ -280,6 +283,7 @@ unif01_Gen * ufile_CreateReadBin (char *A, long dim)
 
 /*-----------------------------------------------------------------------*/
 
+// only in bbattery.c
 void ufile_DeleteReadBin (unif01_Gen *gen)
 {
    X2 = util_Free (X2);
@@ -316,7 +320,7 @@ void ufile_Gen2Bin (unif01_Gen *gen, char *fname, double nbits,
    FILE *f;
    int k;
    const int KMAX = s / 8;
-   int status;
+   size_t status;
 
    util_Assert (nbits > 0.0, "ufile_Gen2Bin:   nbits <= 0");
    util_Assert (r >= 0, "ufile_Gen2Bin:   r < 0");
@@ -325,7 +329,7 @@ void ufile_Gen2Bin (unif01_Gen *gen, char *fname, double nbits,
    util_Assert (nbits / s <= ULONG_MAX,
       "ufile_Gen2Bin:   nbits is too large");
    
-   n = 0.5 + nbits / s;
+   n = (unsigned long)(0.5 + nbits / s);
    if (n * (double) s < nbits)
       n++;
    f = util_Fopen (fname, "wb");

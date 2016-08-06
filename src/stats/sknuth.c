@@ -62,11 +62,11 @@ sknuth_Res1 * sknuth_CreateRes1 (void)
 
 void sknuth_DeleteRes1 (sknuth_Res1 *res)
 {
-   if (res == NULL)
-      return;
-   sres_DeleteBasic (res->Bas);
-   sres_DeleteChi2 (res->Chi);
-   util_Free (res);
+	if (res != NULL) {
+		sres_DeleteBasic(res->Bas);
+		sres_DeleteChi2(res->Chi);
+		util_Free(res);
+	}
 }
 
 
@@ -206,8 +206,8 @@ void sknuth_Gap (unif01_Gen *gen, sres_Chi2 *res,
 
    Timer = chrono_Create ();
    p = Beta - Alpha;
-   t = log (gofs_MinExpected / n) / num2_log1p (-p);
-   len = 1 + log (gofs_MinExpected / (n*p)) / num2_log1p (-p);
+   t = (int)(log (gofs_MinExpected / n) / num2_log1p (-p));
+   len = (int)(1 + log (gofs_MinExpected / (n*p)) / num2_log1p (-p));
    t = util_Min(t, len);
    t = util_Max(t, 0);
 

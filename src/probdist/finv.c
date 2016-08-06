@@ -1045,10 +1045,10 @@ double finv_Normal2 (double u)
    }
    if (u < 0.5) {
       negatif = TRUE;
-      uval.u = 2.0*u;
+	  uval.u = (float)(2.0*u);
    } else {
       negatif = FALSE;
-      uval.u = 2.0*(1.0 - u);
+      uval.u = (float)(2.0*(1.0 - u));
    }
    wval.i = uval.i & 2147221504;
    n = (wval.i >> 18) - 3040;

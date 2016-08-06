@@ -126,6 +126,7 @@ long ran_arr_cycle1()
 
 static unsigned long Ran_array1_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return ran_arr_next1 () << 2;
 }
 
@@ -140,6 +141,7 @@ static double Ran_array1_U01 (void *vpar, void *vsta)
 
 static void WrRan_array1 (void *junk)
 {
+	junk = junk;
    int j;
    if (unif01_WrLongStateFlag) {
       printf ("ran_x1 = {\n ");
@@ -314,6 +316,7 @@ double ranf_arr_cycle1()
 
 static double Ranf_array1_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return ranf_arr_next1 ();
 }
 
@@ -328,6 +331,7 @@ static unsigned long Ranf_array1_Bits (void *vpar, void *vsta)
 
 static void WrRanf_array1 (void *junk)
 {
+	junk = junk;
    int j;
    if (unif01_WrLongStateFlag) {
       printf ("ran_u1 = {\n");
@@ -499,6 +503,7 @@ void ran_start(seed)    /* do this before using ran_array */
 
 static unsigned long Ran_array2_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return ran_arr_next () << 2;
 }
 
@@ -513,6 +518,7 @@ static double Ran_array2_U01 (void *vpar, void *vsta)
 
 static void WrRan_array2 (void *junk)
 {
+	junk = junk;
    int j;
    if (unif01_WrLongStateFlag) {
       printf ("ran_x = {\n ");
@@ -687,6 +693,7 @@ void ranf_start(seed)    /* do this before using ranf_array */
 
 static double Ranf_array2_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return ranf_arr_next ();
 }
 
@@ -701,6 +708,7 @@ static unsigned long Ranf_array2_Bits (void *vpar, void *vsta)
 
 static void WrRanf_array2 (void *junk)
 {
+	junk = junk;
    int j;
    if (unif01_WrLongStateFlag) {
       printf ("ran_u = {\n");

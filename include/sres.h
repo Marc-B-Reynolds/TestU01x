@@ -8,16 +8,9 @@
 
 
 typedef struct {
-
    statcoll_Collector *sVal1, *pVal1;
-
-
    gofw_TestArray sVal2, pVal2;
-
-
    char *name;
-
-
 } sres_Basic;
 
 
@@ -71,15 +64,11 @@ typedef struct {
    double *NbExp;
    long *Count;
    long *Loc;
+   statcoll_Collector *sVal1, *pVal1;
+   
    long jmin;
    long jmax;
-
-
    long degFree;
-
-
-   statcoll_Collector *sVal1, *pVal1;
-
 
    gofw_TestArray sVal2, pVal2;
 

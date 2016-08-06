@@ -33,7 +33,6 @@ enum {
 };
 
 
-/*------------------------------- Functions ------------------------------*/
 
 static void InitRes1 (
    ffam_Fam *fam,
@@ -53,7 +52,6 @@ static void InitRes1 (
 }
 
 
-/*-------------------------------------------------------------------------*/
 
 fknuth_Res1 * fknuth_CreateRes1 (void)
 {
@@ -65,7 +63,6 @@ fknuth_Res1 * fknuth_CreateRes1 (void)
 }
 
 
-/*-------------------------------------------------------------------------*/
 
 void fknuth_DeleteRes1 (fknuth_Res1 *res)
 {
@@ -77,7 +74,6 @@ void fknuth_DeleteRes1 (fknuth_Res1 *res)
 }
 
 
-/*=========================================================================*/
 
 static void PrintHead (char *name, ffam_Fam *fam, int test, void *par1,
    int Nr, int j1, int j2, int jstep)
@@ -120,7 +116,6 @@ static void PrintHead (char *name, ffam_Fam *fam, int test, void *par1,
 }
 
 
-/*=========================================================================*/
 
 static void TabGap (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
@@ -132,8 +127,8 @@ static void TabGap (ffam_Fam *fam, void *res1, void *cho,
    fres_Cont *fres = res1;
    sres_Chi2 *sres;
 
-   N = Par[0];
-   r = Par[1];
+   N = (long)Par[0];
+   r = (long)Par[1];
    Alpha = Par[2];
    Beta = Par[3];
 
@@ -149,7 +144,6 @@ static void TabGap (ffam_Fam *fam, void *res1, void *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_Gap1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                  long N, int r, double Alpha, double Beta,
@@ -178,7 +172,6 @@ void fknuth_Gap1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 }
 
 
-/*========================================================================*/
 
 static void TabSimpPoker (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
@@ -206,7 +199,6 @@ static void TabSimpPoker (ffam_Fam *fam, void *res1, void *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_SimpPoker1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                        long N, int r, int d, int k,
@@ -235,7 +227,6 @@ void fknuth_SimpPoker1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 }
 
 
-/*========================================================================*/
 
 static void TabCouponCollector (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
@@ -262,7 +253,6 @@ static void TabCouponCollector (ffam_Fam *fam, void *res1, void *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_CouponCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                              long N, int r, int d,
@@ -290,7 +280,6 @@ void fknuth_CouponCollector1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 }
 
 
-/*========================================================================*/
 
 static void TabRun (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
@@ -310,7 +299,7 @@ static void TabRun (ffam_Fam *fam, void *res1, void *cho,
    if (!Indep)
       nmin = 600;
    else
-      nmin = 3.0 * gofs_MinExpected;
+      nmin = (long)(3.0 * gofs_MinExpected);
 
    n = fcho_ChooseParamL (cho, nmin, fknuth_Maxn, i, j);
    if (n <= 0)
@@ -326,7 +315,6 @@ static void TabRun (ffam_Fam *fam, void *res1, void *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_Run1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
                  long N, int r, lebool Up, lebool Indep,
@@ -361,7 +349,6 @@ void fknuth_Run1 (ffam_Fam *fam, fres_Cont *res, fcho_Cho *cho,
 }
 
 
-/*========================================================================*/
 
 static void TabMaxOft (ffam_Fam *fam, void *res1, void *cho,
   void *par1, int i, int j, int irow, int icol)
@@ -390,7 +377,6 @@ static void TabMaxOft (ffam_Fam *fam, void *res1, void *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_MaxOft1 (ffam_Fam *fam, fknuth_Res1 *res, fcho_Cho *cho,
                     long N, int r, int d, int t,
@@ -420,7 +406,6 @@ void fknuth_MaxOft1 (ffam_Fam *fam, fknuth_Res1 *res, fcho_Cho *cho,
 }
 
 
-/*========================================================================*/
 
 void fknuth_Serial1 (void)
 {
@@ -428,7 +413,6 @@ void fknuth_Serial1 (void)
 }
 
 
-/*========================================================================*/
 
 void fknuth_SerialSparse1 (void)
 {
@@ -436,7 +420,6 @@ void fknuth_SerialSparse1 (void)
 }
 
 
-/*========================================================================*/
 
 void fknuth_Collision1 (void)
 {
@@ -444,7 +427,6 @@ void fknuth_Collision1 (void)
 }
 
 
-/*========================================================================*/
 
 void fknuth_Permutation1 (void)
 {
@@ -452,12 +434,9 @@ void fknuth_Permutation1 (void)
 }
 
 
-/*========================================================================*/
 
 void fknuth_CollisionPermut1 (void)
 {
    util_Error ("fknuth_CollisionPermut1:   use fmultin_Permut1 instead");
 }
 
-
-/*========================================================================*/

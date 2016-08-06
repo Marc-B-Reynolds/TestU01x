@@ -23,20 +23,18 @@ long fwalk_MaxL = 4194304;
 double fwalk_MinMu = 1.0 / 4194304;
 
 typedef enum {
-   A_VARGEO,
-   A_RANDOMWALK1,
-   A_RANDOMWALK1A
+  A_VARGEO,
+  A_RANDOMWALK1,
+  A_RANDOMWALK1A
 } TestType;
 
 
 enum {
-   B_ALGOP,
-   B_ALGON
+  B_ALGOP,
+  B_ALGON
 };
 
 #define LEN 50
-
-
 
 /*------------------------------ Functions --------------------------------*/
 
@@ -306,11 +304,11 @@ static void TabVarGeo (ffam_Fam * fam, void *res1, void *cho,
    fres_Cont *fres = res1;
    sres_Chi2 *sres;
 
-   N = Par[0];
-   n = Par[1];
-   r = Par[2];
+   N = (long)Par[0];
+   n = (long)Par[1];
+   r = (int)Par[2];
    Mu = Par[3];
-   Algo = Par[4];
+   Algo = (int)Par[4];
 
    if (ChooseParamVarGeo (cho, &n, &Mu, i, j))
       return;

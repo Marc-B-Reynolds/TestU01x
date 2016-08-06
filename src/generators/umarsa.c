@@ -127,6 +127,7 @@ typedef LFIB4_99_state SWB_99_state;
 
 static unsigned long KISS93_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    KISS_state *state = vsta;
    unsigned int b;
 
@@ -198,6 +199,8 @@ static unsigned long KISS96_Bits (void *junk, void *vsta)
    KISS_state *state = vsta;
    unsigned int y, k;
 
+   junk = junk;
+
    state->S1 = 69069 * state->S1 + 1;
    y = state->S2 ^ (state->S2 << 13);
    y ^= y >> 17;
@@ -267,6 +270,7 @@ unif01_Gen *umarsa_CreateKISS96 (unsigned int x, unsigned int y,
 
 static unsigned long KISS99_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    KISS_state *state = vsta;
    unsigned int b;
 
@@ -336,6 +340,7 @@ unif01_Gen *umarsa_CreateKISS99 (unsigned int x, unsigned int y,
 
 static unsigned long ULTRA_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    ULTRA_state *state = vsta;
    unsigned long t;
 
@@ -361,6 +366,7 @@ static double ULTRA_U01 (void *vpar, void *vsta)
 
 static void WrULTRA (void *junk)
 {
+	junk = junk;
    unif01_WrLongStateDef ();
 }
 
@@ -417,6 +423,7 @@ unif01_Gen *umarsa_CreateULTRA (unsigned int x, unsigned int y,
 
 static unsigned long SupDup73_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    SupDup73_state *state = vsta;
    unsigned int b;
 
@@ -705,6 +712,7 @@ unif01_Gen * umarsa_CreateSupDup64Xor (ulonglong x, ulonglong y, ulonglong a,
 
 static unsigned long Marsa90a_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    Marsa90a_state *state = vsta;
    unsigned int x, y;
 
@@ -947,6 +955,7 @@ unif01_Gen *umarsa_CreateRANMAR (int s1, int s2, int s3, int s4)
 
 static unsigned long Mother0_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    Mother0_state *state = vsta;
    ulonglong V;
 
@@ -957,7 +966,7 @@ static unsigned long Mother0_Bits (void *junk, void *vsta)
    state->S3 = state->S4;
    state->S4 = V & MASK32;
    state->C = V >> 32;
-   return state->S4;
+   return (unsigned long)state->S4;
 }
 
 /*-----------------------------------------------------------------------*/
@@ -1026,6 +1035,7 @@ unif01_Gen *umarsa_CreateMother0 (unsigned long s1, unsigned long s2,
 
 static unsigned long Combo_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    Combo_state *state = vsta;
    unsigned long V, Z;
 

@@ -219,7 +219,7 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
    strncpy (name, "uautomata_CreateCA1:", (size_t) LEN);
    addstr_Long (name, "   N = ", (long) N);
    addstr_Long (name, ",   r = ", (long) r);
-   L = num_TwoExp[2*r + 1];
+   L = (long)num_TwoExp[2*r + 1];
    addstr_ArrayInt (name, ",   F = ",  (int) L, F);
    for (i = L-1; i >= 0; i--) {
       Z <<= 1;
@@ -271,10 +271,13 @@ unif01_Gen * uautomata_CreateCA1 (int N, int S[ ], int r, int F[ ],
 
 static unsigned long CA90mp_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    CA90mp_state *state = vsta;
    unsigned long Rand = 0;             /* Random number */
    int s, i;
    int *p;
+
+   junk = junk;
 
    /* Build a 32-bit random integer from the successive bit of cell m */
    for (s = 0; s < 32; ++s) {

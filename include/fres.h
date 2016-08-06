@@ -13,8 +13,8 @@
 
 typedef struct {
    ftab_Table *PVal [gofw_NTestTypes];
-   bitset_BitSet Active;
    char *name;
+   bitset_BitSet Active;
 } fres_Cont;
 
 

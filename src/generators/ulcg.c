@@ -1100,7 +1100,7 @@ static unsigned long Pow2LCGLA_Bits (void *vpar, void *vsta)
    Pow2LCGL_param *param = vpar;
    Pow2LCGL_state *state = vsta;
    state->S = (param->A * state->S + param->C) & param->Mask;
-   return state->S << param->Shift;
+   return  (unsigned long)(state->S << param->Shift);
 }
 
 static double Pow2LCGLB_U01 (void *vpar, void *vsta)

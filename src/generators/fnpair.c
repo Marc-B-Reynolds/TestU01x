@@ -181,6 +181,8 @@ static void PrintHead (char *name, ffam_Fam * fam, TestType test, void *par1,
 
 static void WriteM1 (void *vpar, long junk1, long junk2)
 {
+	junk1 = junk1;
+	junk2 = junk2;
    int *Par = vpar;
    int maxm;
    maxm = Par[0];
@@ -203,7 +205,7 @@ static double ChooseM1 (void *vpar, long N, long n)
    maxm = Par[0];
 
    WriteM1 (vpar, 0, 0);
-   m = sqrt (n / sqrt ((double) N)) / 2.0;
+   m = (int)(sqrt (n / sqrt ((double) N)) / 2.0);
    m = util_Min (m, maxm);
    if (m < 1.0)
       return -1.0;
@@ -272,7 +274,7 @@ static void TabClosePairs (ffam_Fam * fam, void *vres, void *vcho,
       return;
    if (m < 0) {
       util_Assert (chom, "fnpair:   chom is NULL");
-      m = chom->Choose (chom->param, N, n);
+      m = (int)chom->Choose (chom->param, N, n);
       if (m < 1)
          return;
    }

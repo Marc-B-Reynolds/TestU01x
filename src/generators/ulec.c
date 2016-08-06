@@ -112,6 +112,7 @@ typedef struct {
 
 static double CombLec88_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CombLec88_state *state = vsta;
    long k;
 #if LONG_MAX >= 87385394472108L
@@ -189,6 +190,7 @@ unif01_Gen * ulec_CreateCombLec88 (long S1, long S2)
 
 static double CombLec88Float_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CombLec88Float_state *state = vsta;
    long k;
    double Z;
@@ -263,6 +265,7 @@ unif01_Gen * ulec_CreateCombLec88Float (long S1, long S2)
 
 static double CLCG4_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CLCG4_state *state = vsta;
    double U;
 
@@ -386,6 +389,7 @@ unif01_Gen * ulec_CreateCLCG4 (long S1, long S2, long S3, long S4)
 
 static double CLCG4Float_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CLCG4Float_state *state = vsta;
    double U;
    long k;
@@ -488,6 +492,7 @@ unif01_Gen * ulec_CreateCLCG4Float (long S1, long S2, long S3, long S4)
 
 static double MRG93_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    MRG93_state *state = vsta;
    long p1, p5;
 #if LONG_MAX < 230584299847627572L
@@ -608,6 +613,7 @@ unif01_Gen * ulec_CreateMRG93 (long S1, long S2, long S3, long S4, long S5)
 
 static double CombMRG96_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CombMRG96_state *state = vsta;
    long p12, p21;
 #if LONG_MAX < 1342441885711174L
@@ -746,6 +752,7 @@ unif01_Gen *ulec_CreateCombMRG96 (long S11, long S12, long S13,
 
 static double CombMRG96Float_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    CombMRG96Float_state *state = vsta;
    long k;
    double p1, p2;
@@ -1017,6 +1024,7 @@ static unif01_Gen *CreateMRG32k3ii_L (long x10, long x11, long x12,
 
 static double MRG32k3a_L_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    MRG32k3_L_state *state = vsta;
    long p;
 

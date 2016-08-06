@@ -94,16 +94,19 @@ unsigned long unif01_StripB (unif01_Gen *gen, int r, int s)
 
 static double DummyGen_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return 0.0;
 }
 
 static unsigned long DummyGen_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return 0;
 }
 
 static void WrDummyGen (void *junk)
 {
+	junk = junk;
    printf ("   Empty Generator (no state)\n");
 }
 
@@ -156,6 +159,7 @@ typedef struct {
 
 static double DoubleGen_U01 (void *vpar, void *junk)
 {
+	junk = junk;
    double U;
    DoubleGen_param *paramD = vpar;
    unif01_Gen *gen = paramD->gen0;
@@ -186,7 +190,7 @@ unif01_Gen * unif01_CreateDoubleGen2 (unif01_Gen *gen, double v)
    util_Assert (v < 1.0, "unif01_CreateDoubleGen2:   h >= 1");
    genD = util_Malloc (sizeof (unif01_Gen));
    paramD = util_Malloc (sizeof (DoubleGen_param));
-   paramD->s = -num_Log2(v);
+   paramD->s = -(int)num_Log2(v);
    paramD->v = v;
    paramD->gen0 = gen;
 
@@ -260,6 +264,7 @@ typedef struct {
 
 static double LacGen_U01 (void *vpar, void *junk)
 {
+	junk = junk;
    LacGen_param *paramL = vpar;
    unif01_Gen *gen = paramL->gen0;
    int cur = paramL->cur;
@@ -304,6 +309,7 @@ static double LacGen_U01 (void *vpar, void *junk)
 
 static unsigned long LacGen_Bits (void *vpar, void *junk)
 {
+	junk = junk;
    LacGen_param *paramL = vpar;
    unif01_Gen *gen = paramL->gen0;
    int cur = paramL->cur;
@@ -1130,18 +1136,21 @@ static int coGU = 0;                       /* Counter for GU_U01 */
 
 static double GU_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return externGen_U01 ();
 }
 
 
 static unsigned long GU_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return (unsigned long) (externGen_U01 () * unif01_NORM32);
 }
 
 
 static void WrExternGen (void *junk2)
 {
+	junk2 = junk2;
 }
 
 
@@ -1190,12 +1199,14 @@ static int coGB = 0;                        /* Counter for GB_U01 */
 
 static double GB_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return externGen_Bits () / unif01_NORM32;
 }
 
 
 static unsigned long GB_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return externGen_Bits ();
 }
 
@@ -1246,12 +1257,14 @@ static int coGBL = 0;                        /* Counter for GBLong_U01 */
 
 static double GBLong_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return externGenLong_Bits () / unif01_NORM32;
 }
 
 
 static unsigned long GBLong_Bits (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return externGenLong_Bits ();
 }
 

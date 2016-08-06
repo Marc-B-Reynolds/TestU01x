@@ -28,7 +28,6 @@ FILE *util_Fopen (const char *path, const char *mode)
       fprintf (stdout, "\nOpening of %s failed: %s\n\n",
                path, strerror (errno));
       exit (EXIT_FAILURE);
-      return NULL;     /* to eliminate a warning from the compiler */
    } else
       return f;
 }
@@ -56,7 +55,7 @@ void *util_Malloc (size_t size)
    if (p == NULL) {
       fprintf (stdout, "\nmalloc failed: %s\n\n", strerror (errno));
       exit (EXIT_FAILURE);
-      return NULL;     /* to eliminate a warning from the compiler */
+      //return NULL;     /* to eliminate a warning from the compiler */
    } else
       return p;
 }
@@ -66,12 +65,14 @@ void *util_Calloc (size_t count, size_t esize)
    void *p;
    errno = 0;
    p = calloc (count, esize);
-   if (p == NULL) {
+   
+   if (p != NULL) 
+	   return p;
+   else {
       fprintf (stdout, "\ncalloc failed: %s\n\n", strerror (errno));
       exit (EXIT_FAILURE);
-      return NULL;     /* to eliminate a warning from the compiler */
-   } else
-      return p;
+   }
+   //return p;
 }
 
 void *util_Realloc (void *ptr, size_t size)
@@ -82,7 +83,6 @@ void *util_Realloc (void *ptr, size_t size)
    if ((p == NULL) && (size != 0)) {
       fprintf (stdout, "\nrealloc failed: %s\n\n", strerror (errno));
       exit (EXIT_FAILURE);
-      return ptr;      /* to eliminate a warning from the compiler */
    } else
       return p;
 

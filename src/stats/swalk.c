@@ -1145,7 +1145,7 @@ static void swalk_VarGeo (unif01_Gen *gen, sres_Chi2 *res,
 
    /* We consider only the terms of the geometric law with */
    /* probability > epsilon */
-   tt = 1 + (log (epsilon) - num2_log1p (-Mu)) / log (Mu);
+   tt = (long)(1 + (log (epsilon) - num2_log1p (-Mu)) / log (Mu));
    Prob = util_Calloc (1 + (size_t) tt, sizeof (double));
 
    /* The probabilities and the expected numbers: NbExp = n*Prob */

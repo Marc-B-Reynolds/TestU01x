@@ -146,7 +146,7 @@ void gofs_PowerRatios (double U[], long N)
 void gofs_MergeClasses (double NbExp[], long Loc[],
                         long *smin, long *smax, long *NbClasses)
 {
-   long s0, j, s;
+   long s0=0, j, s;
    double somme;
 
    *NbClasses = 0;

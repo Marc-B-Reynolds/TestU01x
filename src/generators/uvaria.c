@@ -442,7 +442,7 @@ static double RanrotB(void) {
 static int iRanrotB(int min, int max) {
   int i, r;
   i = max - min + 1;
-  r = i * RanrotB();
+  r = (int)(i * RanrotB());
   if (r >= i) r = i-1;
   return min + r;
 }
@@ -464,7 +464,7 @@ static void RanrotBInit (my_uint seed) {
   for (i = 0;  i < 300;  i++) RanrotB();
 
   /* compute 2^(- integer size) */
-  scale = ldexp(1., -8* (int) sizeof(my_uint));
+  scale = ldexpf(1., -8* (int) sizeof(my_uint));
 }
 
 
@@ -481,6 +481,7 @@ static void WrRanrotB (void *junk)
 
 static double RanrotB_U01 (void *junk1, void *junk2)
 {
+	junk1 = junk1;junk2 = junk2;
    return RanrotB ();
 }
 

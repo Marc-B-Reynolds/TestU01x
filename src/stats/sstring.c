@@ -677,7 +677,7 @@ void sstring_LongestHeadRun (unif01_Gen *gen, sstring_Res2 *res,
    long longueur2;                 /* Run length in a sequence */
    long longueur3;                 /* Run length in a replication */
    long jhigh;                     /* Highest class for Chi2 */
-   long jhigh2;                    /* Highest index for CDF[j] */
+   long jhigh2 = 0;                    /* Highest index for CDF[j] */
    long NbGroups;                  /* Number of classes for Chi2 */
    bitset_BitSet ensemble;         /* Chosen bits in each generated number */
    double V[1];                    /* Number degrees of freedom for Chi2 */
@@ -916,7 +916,7 @@ static void HammingWeight2_S (unif01_Gen * gen, sres_Basic * res,
 {
    const int sDivL = s / L;         /* A number generates sDivL blocks */
    const long Q = K / sDivL + (K % sDivL > 0);
-   const unsigned long MASK = num_TwoExp[L] - 1.0;
+   const unsigned long MASK = (unsigned long)(num_TwoExp[L] - 1.0);
    const double L2 = L / 2.0;
    int co, j;
    long i, Seq;
@@ -1070,7 +1070,7 @@ static void HammingWeight_S (unif01_Gen * gen, sres_Chi2 * res,
    const int s1 = s - s % L;
    const long Q = n / sDivL;
    const int Q2 = n % sDivL;
-   const unsigned long MASK = num_TwoExp[L] - 1.0;
+   const unsigned long MASK = (unsigned long)(num_TwoExp[L] - 1.0);
    int co, j;
    long i, Seq;
    unsigned long Z, Y;
@@ -1289,8 +1289,8 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    int pBit;                      /* Previous bit */
    int k, j;
    long Seq;
-   double cob;                    /* Counter for number of bits */
-   long cor;                      /* Counter for number of 1 runs */
+   double cob=0;                    /* Counter for number of bits */
+   long cor=0;                      /* Counter for number of 1 runs */
    int len;                       /* Length of current run */
    unsigned long Z;
    double X2, X, temp;
@@ -1305,7 +1305,7 @@ void sstring_Run (unif01_Gen * gen, sstring_Res3 *res,
    double Param[1];
 
    Timer = chrono_Create ();
-   k = 1 + num_Log2 (n / gofs_MinExpected);
+   k = (int)(1 + num_Log2 (n / gofs_MinExpected));
    if (swrite_Basic)
       WriteDataPeriod (gen, TestName, N, n, r, s);
    util_Assert (r + s <= 32, "sstring_Run:   r + s > 32");
@@ -1524,8 +1524,8 @@ void sstring_AutoCor (unif01_Gen * gen, sres_Basic * res,
    statcoll_SetDesc (res->sVal1, "sVal1:   a standard normal");
    s1 = d % s;
    s2 = s - s1;
-   mask1 = num_TwoExp[s1] - 1.0;
-   mask2 = num_TwoExp[s2] - 1.0;
+   mask1 = (unsigned long)(num_TwoExp[s1] - 1.0);
+   mask2 = (unsigned long)(num_TwoExp[s2] - 1.0);
 
    for (Seq = 1; Seq <= N; Seq++) {
       /* Fill circular buffer with first random numbers */
@@ -1645,7 +1645,7 @@ static void HammingCorr_S (unif01_Gen *gen, sstring_Res * res,
    const int sDivL = s / L;         /* A number generates sDivL blocks */
    const long Q = n / sDivL;
    const long Q1 = n % sDivL;
-   const unsigned long MASK = num_TwoExp[L] - 1.0;
+   const unsigned long MASK = (unsigned long)(num_TwoExp[L] - 1.0);
    int Pre, X;
    int j;
    long k;
@@ -1831,12 +1831,12 @@ static void HammingIndep_S (unif01_Gen *gen, sstring_Res * res,
  */
 {
    const int sDivL = s / L;         /* A number generates sDivL blocks */
-   const unsigned long MASK = num_TwoExp[L] - 1.0;
+   const unsigned long MASK = (unsigned long)(num_TwoExp[L] - 1.0);
    int Pre;                         /* Previous value of X */
    int X;
    int j;
    unsigned long Q, Q1, i;
-   unsigned long Z, Y;
+   unsigned long Z=0, Y;
    unsigned long TwonUL;
    unsigned long bloc = 0;
 

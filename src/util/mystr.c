@@ -12,21 +12,21 @@
 #include <string.h>
 
 
-void mystr_Delete (char S[], unsigned int index, unsigned int len)
+void mystr_Delete (char S[], size_t index, size_t len)
 {
-   int i;
+	size_t i;
    size_t length = strlen (S);
    if (index + len > length)
       S[index] = '\0';
    else
-      for (i = index; (unsigned int) i <= length - len; ++i)
+      for (i = index;  i <= length - len; ++i)
          S[i] = S[i + len];
 }
 
 
-void mystr_Insert (char Res[], char Source[], unsigned int Pos)
+void mystr_Insert (char Res[], char Source[], size_t Pos)
 {
-   int i;
+   size_t i;
    size_t ResLength = strlen (Res);
    size_t SourceLength = strlen (Source);
    if (Pos > ResLength)
@@ -106,9 +106,9 @@ int mystr_Match (char Source[], char Pattern[])
 }
 
 
-void mystr_Slice (char R[], char S[], unsigned int P, unsigned int L)
+void mystr_Slice (char R[], char S[], size_t P, size_t L)
 {
-   unsigned int i;
+	size_t i;
    if (P + L > strlen (S))
       util_Error ("*** ERROR : mystr_Slice Pattern longer then Source");
    for (i = 0; i < L; i++) {
@@ -134,8 +134,8 @@ void mystr_Subst (char source[], char OldPattern[], char NewPattern[])
 }
 
 
-void mystr_Position (char Substring[], char Source[], unsigned int at,
-                     unsigned int *pos, int *found)
+void mystr_Position (char Substring[], char Source[], size_t at,
+	size_t *pos, size_t *found)
 {
    char *result = strstr (Source + at, Substring);
    if (at > strlen (Source))

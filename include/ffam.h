@@ -8,11 +8,11 @@
 
 
 typedef struct {
-   unif01_Gen **Gen;
+   unif01_Gen** Gen;
    int *LSize;
    int *Resol;
-   int Ng;
    char *name;
+   int Ng;
 } ffam_Fam;
 
 

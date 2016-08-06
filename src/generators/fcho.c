@@ -31,19 +31,18 @@ int fcho_Resolution = 30;
 
 double fcho_Linear (double x)
 {
-   return x;
+  return x;
 }
 
 
 double fcho_LinearInv (double x)
 {
-   return 1.0/x;
+  return 1.0/x;
 }
-
 
 double fcho_2Pow (double x)
 {
-   return pow (2.0, x);
+  return pow (2.0, x);
 }
 
 static void WriteSample (void *vpar, long junk, long j)
@@ -52,6 +51,8 @@ static void WriteSample (void *vpar, long junk, long j)
    const double a = param->a;
    const double b = param->b;
    const double c = param->c;
+
+   junk = junk;
 
    printf ("Choose  ");
    if (ftab_Style == ftab_Latex)
@@ -100,14 +101,14 @@ static void WriteSample (void *vpar, long junk, long j)
 
 static double ChooseSample (void *vpar, long i, long j)
 {
-   Sample_Param *param = vpar;
-   double x, y;
-   
-   if (swrite_Basic)
-      WriteSample (vpar, 0, j);
-   x = i * param->a + j * param->b + param->c;
-   y = param->F(x);
-   return y;
+  Sample_Param *param = vpar;
+  double x, y;
+  
+  if (swrite_Basic)
+    WriteSample (vpar, 0, j);
+  x = i * param->a + j * param->b + param->c;
+  y = param->F(x);
+  return y;
 }
 
 

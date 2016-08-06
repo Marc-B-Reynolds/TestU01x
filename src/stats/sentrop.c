@@ -205,6 +205,9 @@ static void WriteResultsDiscOver (sentrop_Res *res, double NLR, double Sum2,
    num_WriteD (Var, 12, 8, 2);
    printf ("\n");
 
+   Sum2 = Sum2;
+   SumSq = SumSq;
+
 #ifndef STABLE
    if (swrite_Basic) {
       printf ("\nInformation on the numerical error in the computation\n"

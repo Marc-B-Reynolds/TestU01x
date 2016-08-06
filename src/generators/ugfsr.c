@@ -508,6 +508,7 @@ unif01_Gen * ugfsr_CreateToot73 (unsigned long S[])
 
 static unsigned long Fushimi90_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    GFSR_state *state = vsta;
    unsigned long V;
 
@@ -1622,6 +1623,7 @@ static void WrZiff98 (void *vsta)
 
 static unsigned long Ziff98_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    GFSR_state *state = vsta;
    return RandomInteger;
 }
@@ -1630,6 +1632,7 @@ static unsigned long Ziff98_Bits (void *junk, void *vsta)
 
 static double Ziff98_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    GFSR_state *state = vsta;
    return  RandomInteger * unif01_INV32;
 }

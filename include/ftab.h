@@ -22,12 +22,12 @@ typedef enum {
 typedef struct {
    double **Mat;
    int *LSize;
-   int Nr, Nc;
-   int j1, j2, jstep;
-   ftab_FormType Form;
    char *Desc;
    char **Strings;
+   int Nr, Nc;
+   int j1, j2, jstep;
    int Ns;
+   ftab_FormType Form;
 } ftab_Table;
 
 

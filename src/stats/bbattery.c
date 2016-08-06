@@ -67,7 +67,7 @@ static int TestNumber[1 + NDIM] = { 0 };
 static void GetName (unif01_Gen * gen, char *genName)
 {
    char *p;
-   int len1, len2;
+   size_t len1, len2;
 
    if (NULL == gen) {
       genName[0] = '\0';
@@ -2758,7 +2758,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
    util_Assert (nb > 0, "Alphabit:   nb <= 0");
    /* Bits will be read as 32-bit unsigned integers */
    nb -= fmod (nb, 32.0);
-   bufsiz = nb / 32.0;
+   bufsiz = (long)(nb / 32.0);
 
    if (blocFlag) {
       gen0 = ufile_CreateReadBin (fname, bufsiz);
@@ -2782,7 +2782,7 @@ static void Alphabit (unif01_Gen * gen, char *fname, double nb, int r, int s,
          ufile_InitReadBin ();
 
       if (nb > BILLION)
-         N = 1 + nb / BILLION;
+         N = (long)(1 + nb / BILLION);
       else
          N = 1;
       n = nb / N;

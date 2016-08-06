@@ -177,6 +177,7 @@ unsigned long xor4096s (unsigned long seed)
 
 static unsigned long xor4096s_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    static unsigned int w, x[r], weil = 0x61c88647;
    unsigned int t, v;
    static int i = -1;             /* i < 0 indicates first call */
@@ -232,6 +233,7 @@ static double xor4096s_U01 (void *vpar, void *vsta)
 
 static void Wr_xor4096 (void *junk)
 {
+	junk = junk;
 }
 
 /*-----------------------------------------------------------------------*/
@@ -520,6 +522,7 @@ void ubrent_DeleteXorgen32 (unif01_Gen *gen)
 
 static unsigned long xor4096l_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    static ulonglong w, x[r],
       weil = ((longlong) 0x61c88646 << 32) + (longlong) 0x80b583eb;
    ulonglong t, v;
@@ -825,6 +828,7 @@ double xor4096d (unsigned long long seed)
 
 static double xor4096d_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    static ulonglong w, x[r],
       weil = ((longlong) 0x61c88646 << 32) + (longlong) 0x80b583eb;
    ulonglong t, v;
@@ -1046,6 +1050,7 @@ static UINT xor4096i (UINT seed)
 
 static UINT xor4096i_Bits (void *junk, void *vsta)
 {
+	junk = junk;
    UINT seed = *((UINT *) vsta);
    UINT Z = xor4096i(seed);
    *((UINT *) vsta) = 0;
@@ -1183,6 +1188,7 @@ static UREAL xor4096r (UINT seed)
 
 static double xor4096r_U01 (void *junk, void *vsta)
 {
+	junk = junk;
    UINT seed = *((UINT *) vsta);
    double u = xor4096r(seed);
    *((UINT *) vsta) = 0;

@@ -247,6 +247,8 @@ double smultin_MNTermeKhi2 (double junk, double NbEsp, long j)
  * One term of Chi2 = 2nI1; there are j balls in this urn.
  */
 {
+	junk = junk; //
+
    double Diff;
    Diff = j - NbEsp;
    return Diff * Diff / NbEsp;
@@ -275,6 +277,8 @@ double smultin_MNTermeLogLikhood (double junk, double NbEsp, long j)
  * One term of loglikelihood ratio = 2nI0; there are j balls in this urn
  */
 {
+	junk = junk;
+
    if (j == 0)
       return 0.0;
    return 2.0 * j * log (j / NbEsp);
@@ -288,6 +292,7 @@ double smultin_MNTermeColl (double junk1, double junk2, long j)
  * Number of collisions when there are j balls in this urn
  */
 {
+	junk1 = junk1;junk2 = junk2;
    if (j <= 1)
       return 0.0;
    return (double) (j - 1);
@@ -322,7 +327,7 @@ static void MNCalcMuSigma (
    double x, nr = n;
 
    util_Assert (nlim <= n, "MNCalcMuSigma;  nlim > n");
-   Mid = n / k;
+   Mid = (long)(n / k);
    while (Mid < nlim && fabs (V[Mid]) < Eps)
       ++Mid;
    util_Assert (Mid <= nlim, "MNCalcMuSigma;  Mid > nlim");
@@ -519,7 +524,7 @@ void smultin_MultinomMuSigma (
    /* PV[0..n]. For high densities n/k, nlim will have to be increased.  */
 
    densite = n / (double) k;
-   nlim = 8 * densite;
+   nlim = (long)(8 * densite);
    if (nlim < LIM_SPARSE)
       nlim = LIM_SPARSE;          /* Sparse = TRUE */
    if (nlim > n)
@@ -565,7 +570,7 @@ static void CalcTabFj (
    if (Sparse)
       res->nLimit = LIM_SPARSE;
    else {
-      res->nLimit = LIM_DENSE * NbExp;
+      res->nLimit = (int)(LIM_DENSE * NbExp);
       if (res->nLimit < 1)
          res->nLimit = 2;
    }
@@ -1066,10 +1071,7 @@ smultin_CellType smultin_GenerCellSerial2 (unif01_Gen *gen,
 }
 
 
-/*=======================================================================*/
-
-smultin_CellType smultin_GenerCellPermut (unif01_Gen *gen,
-   int r, int t, long junk)
+smultin_CellType smultin_GenerCellPermut (unif01_Gen *gen, int r, int t, long junk)
 {
    int s, i, j;
    smultin_CellType Cell = 0;
@@ -1097,7 +1099,7 @@ smultin_CellType smultin_GenerCellPermut (unif01_Gen *gen,
 smultin_CellType smultin_GenerCellMax (unif01_Gen *gen,
    int r, int t, long junk)
 {
-   int i, MaxI;
+   int i, MaxI=0;
    double U, MaxU = -1.0;
 
    /* Don't forget that cells are numbered from 0 to k - 1 */
@@ -1338,7 +1340,6 @@ double smultin_FDistCollisions (fmass_INFO W, long s)
       return W->cdf[s];
    default:
       util_Error ("smultin_FDistCollisions:  Not initialized");
-      return 0.0;
    }
 }
 
@@ -1648,8 +1649,8 @@ static void CalcResultsPowDiv (
 {
 
    double pR, pL;
-   double pCollLeft;              /* Left p-value of Collision test */
-   double pCollRight;             /* Right p-value of Collision test */
+   double pCollLeft=0;              /* Left p-value of Collision test */
+   double pCollRight=0;             /* Right p-value of Collision test */
    int j;
    statcoll_Collector *SC = res->Collector[s];
    fmass_INFO Mass1, Mass2;
@@ -1843,6 +1844,7 @@ static void WriteResultsPowDiv (
 
 /*=======================================================================*/
 
+// TODO: speed here
 static void UpdateCountHash (
    smultin_Res *res, 
    smultin_CellType Ind,
@@ -2060,7 +2062,7 @@ static void Multinom (unif01_Gen * gen, smultin_Param * par,
    long Hache;                    /* Hashing module */
    double HacheLR;                /* Dimension of hashing table */
    long i;
-   long CoMax;                    /* Maximum number of balls in any cell */
+   long CoMax=1;                    /* Maximum number of balls in any cell */
    double X0, X;                  /* Statistics */
    DeltaIndex j;                  /* Which power divergence case */
    double SumX2[smultin_MAX_DELTA];
@@ -2466,6 +2468,8 @@ static void WriteResCollOver (
  * Write results for CollisionOver test
  */
 {
+	EColl = EColl; // 
+
    int j;
    printf ("\n-----------------------------------------------\n"
            "Results of CollisionOver test:\n\n");
@@ -3202,11 +3206,11 @@ static void MultinomOver (unif01_Gen * gen, smultin_Param * par,
    double EColl;              /* Approx. expected number of collisions */
    DeltaIndex s;
    long Hache1, Hache11;      /* Hashing modules */
-   long CoMax1;               /* Max number of balls in any cell: t-1 dim. */
-   long CoMax;                /* Max number of balls in any cell: t dim. */
+   long CoMax1=1;               /* Max number of balls in any cell: t-1 dim. */
+   long CoMax=1;                /* Max number of balls in any cell: t dim. */
    double X, X0, X1;          /* Statistics */
-   double Esperance;          /* Expected value of number of collisions */
-   double StandDev;           /* Standard deviation of number of collisions */
+   double Esperance=0.0;          /* Expected value of number of collisions */
+   double StandDev=1.0;           /* Standard deviation of number of collisions */
    double V[1];               /* Number of degrees of freedom for ChiSquare */
    double SumX2[smultin_MAX_DELTA];
    double SumX[smultin_MAX_DELTA];
