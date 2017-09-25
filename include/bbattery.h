@@ -17,7 +17,8 @@ extern double bbattery_pVal[];
 extern char *bbattery_TestNames[];   
 
 
-void bbattery_SmallCrush (unif01_Gen *gen);
+void bbattery_SmallCrush(unif01_Gen *gen);
+void bbattery_SmallCrushAdaptive(unif01_Gen *gen);
 
 void bbattery_SmallCrushFile (char *filename);
 
