@@ -6,6 +6,7 @@
 #include "gdef.h"
 
 
+
 typedef struct {
    void *state;
    void *param;
@@ -13,6 +14,9 @@ typedef struct {
    double (*GetU01) (void *param, void *state);
    unsigned long (*GetBits) (void *param, void *state);
    void (*Write) (void *state);
+   // added for adaptive batteries (currently smallcrush only)
+   void* (*getCurrentState)(void* param, void* state);
+   void  (*setCurrentState)(void* param, void* state);
 } unif01_Gen;
 
 

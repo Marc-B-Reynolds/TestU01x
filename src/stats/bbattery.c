@@ -570,12 +570,13 @@ static void SmallCrush(unif01_Gen * gen, char *filename, int Rep[])
 }
 
 // all temp hack
-#define RERUN_LIMIT 20
+#define RERUN_LIMIT 11
 #define ALPHA 0.1
 #define BETA 0.00000001
 
+// reruns any p-value outside 99.9% confidence
 static uint32_t isQuestionablePvalue(double pvalue)
-{
+{  
   // straight fail
   if(pvalue < BETA || pvalue > 1.0-BETA) {
     return 0;
@@ -590,7 +591,13 @@ static uint32_t isQuestionablePvalue(double pvalue)
   return 0;
 }
 
-// hack in progress
+// MBR: Modified version of smallcrush. At the start of each test we store
+// the current state.  If a test returns a questionable p-value then we
+// reset the state to where it was before the test started and rerun the
+// test with an increased sample size (25% larger each retry).  We repeat
+// this process until result is clear fail or pass or we reach a limit
+// (RERUN_LIMIT).  Restoring the state is to insure we include what was
+// a potentially problematic part of the sequence in the new run.
 static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
 /*
  * A small battery of statistical tests for Random Number Generators 
@@ -642,6 +649,8 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
 #else
     uint32_t size = MILLION/2;
 #endif
+
+    void* state = gen->getCurrentState(gen,0); // hack
     
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
 #ifdef USE_LONGLONG
@@ -652,6 +661,7 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
       if(!isQuestionablePvalue(res1->pVal2)) break;
       printf(" : ? BirthdaySpacings\n");
       size += size>>2;
+      gen->setCurrentState(gen, state);
     }
 
     bbattery_pVal[++j] = res1->pVal2;
@@ -667,13 +677,15 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   res3 = sknuth_CreateRes2();
 
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = 5 * MILLION;
+    uint32_t size  = 5 * MILLION;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sknuth_Collision(gen, res3, 1, size, 0, 65536, 2);
       
       if(!isQuestionablePvalue(res3->Pois->pVal2)) break;
       printf(" : ? Collision\n");
       size += size>>2;
+      gen->setCurrentState(gen, state);
     }
     
     bbattery_pVal[++j] = res3->Pois->pVal2;
@@ -690,12 +702,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   res2 = sres_CreateChi2();
   
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = MILLION/5;
+    uint32_t size  = MILLION/5;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sknuth_Gap(gen, res2, 1, size, 22, 0.0, .00390625);
       if(!isQuestionablePvalue(res2->pVal2[gofw_Mean])) break;
       printf(" : ? Gap\n");
       size += size>>2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res2->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -707,12 +721,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   if(fileFlag)
     ufile_InitReadText();
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = 2 * MILLION / 5;
+    uint32_t size  = 2 * MILLION / 5;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sknuth_SimpPoker(gen, res2, 1, size, 24, 64, 64);
       if(!isQuestionablePvalue(res2->pVal2[gofw_Mean])) break;
       printf(" : ? SimpPoker\n");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res2->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -723,12 +739,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   if(fileFlag)
     ufile_InitReadText();
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = MILLION / 2;
+    uint32_t size  = MILLION / 2;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sknuth_CouponCollector(gen, res2, 1, size, 26, 16);
       if(!isQuestionablePvalue(res2->pVal2[gofw_Mean])) break;
       printf(" : ? CouponCollector\n");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res2->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -743,13 +761,17 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   res5 = sknuth_CreateRes1();
 
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = 2 * MILLION;
+    uint32_t size  = 2 * MILLION;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sknuth_MaxOft(gen, res5, 1, size, 0, MILLION / 10, 6);
 
       if(!isQuestionablePvalue(res5->Chi->pVal2[gofw_Mean]) &&
          !isQuestionablePvalue(res5->Bas->pVal2[gofw_Mean])) break;
       printf(" : ? MaxOft\n");
+
+      size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
       
     bbattery_pVal[++j] = res5->Chi->pVal2[gofw_Mean];
@@ -768,12 +790,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
     ufile_InitReadText();
   
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = MILLION / 5;
+    uint32_t size  = MILLION / 5;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       svaria_WeightDistrib(gen, res2, 1, size, 27, 256, 0.0, 0.125);
       if(!isQuestionablePvalue(res2->pVal2[gofw_Mean])) break;
       printf(" : ? WeightDistrib\n");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res2->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -784,12 +808,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   if(fileFlag)
     ufile_InitReadText();
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = 20 * THOUSAND;
+    uint32_t size  = 20 * THOUSAND;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       smarsa_MatrixRank(gen, res2, 1, size, 20, 10, 60, 60);
       if(!isQuestionablePvalue(res2->pVal2[gofw_Mean])) break;
       printf(" : ? MatrixRank\n");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res2->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -802,12 +828,14 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   ++j2;
   res6 = sstring_CreateRes();
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = MILLION/2;
+    uint32_t size  = MILLION/2;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
       sstring_HammingIndep(gen, res6, 1, size, 20, 10, 300, 0);
       if(!isQuestionablePvalue(res6->Bas->pVal2[gofw_Mean])) break;
       printf(": ? HammingIndep");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
     bbattery_pVal[++j] = res6->Bas->pVal2[gofw_Mean];
     TestNumber[j] = j2;
@@ -823,7 +851,8 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
 
   
   for(i = 0; i < Rep[j2]; ++i) {
-    uint32_t size = MILLION;
+    uint32_t size  = MILLION;
+    void*    state = gen->getCurrentState(gen, 0); // hack
     uint32_t pv_offset = j;
     
     for(uint32_t cnt=0; cnt<RERUN_LIMIT; cnt++) {
@@ -840,6 +869,7 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
       j = pv_offset;
       printf(" : ? RandomWalk\n");
       size += size >> 2;
+      gen->setCurrentState(gen, state);
     }
   }
 
@@ -848,12 +878,12 @@ static void SmallCrushAdaptive(unif01_Gen * gen, char *filename, int Rep[])
   bbattery_NTests = ++j;
 
   if(fileFlag) {
-    WriteReport(filename, "SmallCrush", bbattery_NTests, bbattery_pVal,
+    WriteReport(filename, "SmallCrush (adaptive)", bbattery_NTests, bbattery_pVal,
 		 Timer, TRUE, TRUE, 0.0);
     ufile_DeleteReadBin(gen);
   } else {
     GetName(gen, genName);
-    WriteReport(genName, "SmallCrush", bbattery_NTests, bbattery_pVal,
+    WriteReport(genName, "SmallCrush (adaptive)", bbattery_NTests, bbattery_pVal,
 		 Timer, FALSE, TRUE, 0.0);
   }
   chrono_Delete(Timer);
